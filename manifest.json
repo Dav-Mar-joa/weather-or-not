@@ -8,12 +8,12 @@
       "type": "image/x-icon"
     },
     {
-      "src": "/icon/manifest/icon192.jpeg",
-      "type": "image/jeg",
+      "src": "%PUBLIC_URL%/icon/manifest/icon192.jpeg",
+      "type": "image/jpeg",
       "sizes": "192x192"
     },
     {
-      "src": "/icon/manifest/icon512.jpeg",
+      "src": "%PUBLIC_URL%/icon/manifest/icon512.jpeg",
       "type": "image/jpeg",
       "sizes": "512x512"
     }
