@@ -1,0 +1,82 @@
+/* reset léger */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+}
+
+/* carte météo */
+.current-weather {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  border-radius: 24px;
+  padding: 28px 32px;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  text-align: center;
+}
+
+/* ville */
+.current-weather h2 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* date / heure */
+.current-weather p:first-of-type {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* température principale */
+.current-weather p:nth-of-type(2) {
+  font-size: 3.2rem;
+  font-weight: 700;
+  margin: 18px 0 6px;
+}
+
+/* ressenti */
+.current-weather p:nth-of-type(3) {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* description météo */
+.current-weather p:nth-of-type(4) {
+  font-size: 1.1rem;
+  margin: 10px 0 16px;
+  text-transform: capitalize;
+}
+
+/* icône */
+.current-weather img {
+  width: 90px;
+  height: 90px;
+  margin: 10px auto;
+}
+
+/* infos secondaires */
+.current-weather p {
+  margin: 6px 0;
+  font-size: 0.95rem;
+}
+
+/* update */
+.current-weather p:last-of-type {
+  margin-top: 14px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+}

@@ -11,7 +11,9 @@ function App() {
       .then(res => res.json())
       .then(data => {
         setWeatherData(data); // on garde toute la data brute
+        console.log("data : ",data)
       })
+      
       .catch(err => console.error(err));
   }, []);
 
