@@ -2,7 +2,7 @@
   "name": "weather-or-not",
   "version": "0.1.0",
   "private": true,
-  "homepage":"https://dav-mar-joa.github.io/weather-or-not",
+  "homepage": "https://dav-mar-joa.github.io/weather-or-not",
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",

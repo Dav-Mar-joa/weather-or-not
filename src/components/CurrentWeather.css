@@ -19,18 +19,24 @@ body {
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(16px);
   border-radius: 24px;
-  padding: 28px 32px;
+  padding: 28px 2px;
+  /* margin :0 10px 0 10px; */
   width: 100%;
-  max-width: 380px;
+  max-width: 310px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
   text-align: center;
   border : 2px solid rgba(255, 255, 255, 0.15);
 }
 
+.datetime {
+  display: flex;
+  justify-content: space-around; /* ou space-between selon ce que tu veux */
+}
+
 /* ville */
 .current-weather h2 {
   margin: 0;
-  font-size: 1.6rem;
+  font-size: 1.3rem;
   font-weight: 600;
   letter-spacing: 0.5px;
 }
@@ -44,14 +50,14 @@ body {
 
 /* température principale */
 .current-weather p:nth-of-type(2) {
-  font-size: 1.8rem;
+  font-size: 1.3rem;
   font-weight: 700;
   margin: 18px 0 18px;
 }
 
 /* ressenti */
 .current-weather p:nth-of-type(3) {
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: rgba(255, 255, 255, 0.85);
 }
 
@@ -71,15 +77,15 @@ body {
 
 /* icône */
 .current-weather img {
-  width: 90px;
-  height: 90px;
+  width: 70px;
+  height: 70px;
   margin: 3px auto;
 }
 
 /* infos secondaires */
 .current-weather p {
   margin: 6px 0;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
 }
 
 /* update */
@@ -96,16 +102,17 @@ body {
 
 .weather-card p:first-of-type {
   text-align: center;
-  font-size: 1.4rem;
+  font-size: 1rem;
   margin-bottom:0;
 }
 
 .weather-card p:nth-of-type(2) {
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   margin-bottom: 0;
 }
 
 .weather-card p:nth-of-type(3) {
+  font-size: 0.9rem;
   margin-bottom: 0;
 }
 
@@ -117,7 +124,7 @@ body {
 }
 
 .weather-card img {
-  width: 4rem;
-  height: 4rem;
+  width: 3.4rem;
+  height: 3.4rem;
   margin-top: 6px;
 }

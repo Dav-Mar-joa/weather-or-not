@@ -11,7 +11,10 @@ function CurrentWeather({ current, location }) {
   return (
     <div className="current-weather">
       <h2>{location.name} ({location.country})</h2>
-      <p>{date} à {hour}</p>
+      <p className="datetime">
+        <span>{hour}</span>
+        {/* <span>{date}</span> */}
+      </p>
       <p>🌡{current.temp_c}°C</p>
       <p>Température ressentie : {current.feelslike_c}°C</p>
       <p>{current.condition.text}</p>
