@@ -7,7 +7,7 @@ body {
   margin: 0;
   font-family: "Inter", "Segoe UI", system-ui, sans-serif;
   background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  min-height: 100vh;
+  min-height: 95vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -224,7 +224,7 @@ body {
 
 /* Pour que les boutons restent en bas */
 .bottom-head {
-  margin-top: auto; /* pousse les boutons vers le bas */
+  /* margin-top: auto;  */
   display: flex;
   justify-content: space-around; /* espace entre les deux boutons */
   /* padding: 20px; */
@@ -234,7 +234,7 @@ body {
 }
 
 .bottom-head button {
-  padding: 10px 20px;
+  /* padding: 10px 20px; */
   font-size: 16px;
   cursor: pointer;
   border-radius: 5px;
