@@ -73,6 +73,20 @@ function App() {
       .catch(err => console.error(err));
   }, [city]);
 
+    const refreshWeather = () => {
+    if (!city) return;
+
+    fetch(
+      `https://api.weatherapi.com/v1/forecast.json?key=f9cc340e26b240188b2195245242805&q=${city}&days=7&aqi=no&alerts=no`
+    )
+      .then(res => res.json())
+      .then(data => {
+        setWeatherData(data);
+      })
+      .catch(err => console.error(err));
+  };
+
+
   if (!weatherData) return <p>Chargement...</p>;
 
   return (
@@ -80,7 +94,7 @@ function App() {
       {/* Passe seulement les données actuelles au composant CurrentWeather */}
 
       <div className="bottom-head">
-        <button onClick={() => alert("Bouton 1 !")}>🔄 Refresh</button>
+        <button onClick={refreshWeather}>🔄 Refresh</button>
         <button onClick={() => alert("Bouton 2 !")}>📍 Locate</button>
 
     </div>

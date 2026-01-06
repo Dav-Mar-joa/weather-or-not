@@ -1,0 +1,250 @@
+/* reset léger */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  min-height: 95vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+}
+
+/* carte météo */
+.current-weather {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  border-radius: 24px;
+  padding: 14px 2px 2px 2px;
+  /* margin :0 10px 0 10px; */
+  width: 100%;
+  max-width: 300px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  text-align: center;
+  border : 2px solid rgba(255, 255, 255, 0.15);
+}
+
+/* carte météo */
+.current-weather-infos {
+  /* background: rgba(255, 255, 255, 0.08); */
+  backdrop-filter: blur(16px);
+  /* border-radius: 24px; */
+  padding: 14px 2px 2px 2px;
+  /* margin :0 10px 0 10px; */
+  width: 100%;
+  max-width: 400px;
+  /* box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35); */
+  text-align: center;
+  /* border : 2px solid rgba(255, 255, 255, 0.15); */
+}
+
+.condition {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly; /* espaces égaux */
+  width: 100%;
+}
+
+.condition p {
+  font-size: 2rem;
+  margin: 0;
+  color:aliceblue
+}
+
+.condition img {
+  width: 3rem;
+  height: 3rem;
+}
+
+.condition-infos {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly; /* espaces égaux */
+  width: 100%;
+}
+
+.condition-infos p {
+  font-size: 0.9rem;
+  margin: 0;
+  margin-top: 5px;
+  color:aliceblue
+}
+
+.condition-infos img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.datetime {
+  display: flex;
+  justify-content: space-around; /* ou space-between selon ce que tu veux */
+}
+
+/* ville */
+.current-weather h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* date / heure */
+.current-weather p:first-of-type {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  /* color: rgba(255, 255, 255, 0.7); */
+}
+
+/* température principale */
+.current-weather p:nth-of-type(1) {
+  /* border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px; */
+  /* padding: 8px 0; */
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 10px 0 10px;
+  color:rgb(147, 243, 198);
+}
+
+/* ressenti */
+.current-weather p:nth-of-type(2) {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* description météo */
+.current-weather p:nth-of-type(3) {
+  font-size: 0.8rem;
+  margin: 10px 0 10px;
+  text-transform: capitalize;
+}
+/* description météo */
+.current-weather p:nth-of-type(4) {
+  font-size: 0.8rem;
+  margin: 10px 0 10px;
+  text-transform: capitalize;
+}
+
+/* description météo */
+.current-weather p:nth-of-type(5) {
+  font-size: 0.8rem;
+  margin: 10px 0 0px;
+  text-transform: capitalize;
+}
+
+
+/* icône */
+/* .current-weather img {
+  width: 70px;
+  height: 70px;
+  margin: 3px auto;
+} */
+
+/* infos secondaires */
+/* .current-weather p {
+  margin: 6px 0;
+  font-size: 0.85rem;
+} */
+
+/* update */
+.current-weather p:last-of-type {
+  margin-top: 10px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.weather-card h2:first-child {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.weather-card p:first-of-type {
+  text-align: center;
+  font-size: 0.9rem;
+  margin-bottom:0;
+}
+
+.weather-card p:nth-of-type(2) {
+  font-size: 0.75rem;
+  margin-bottom: 0;
+}
+
+.weather-card p:nth-of-type(3) {
+  font-size: 0.75rem;
+  margin-bottom: 0;
+}
+
+.weather-card p:nth-of-type(4) {
+  font-size: 0.75rem;
+  margin-bottom: 0;
+}
+
+.weather-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.weather-card img {
+  width: 3.2rem;
+  height: 3.2rem;
+  margin-top: 6px;
+  margin-bottom : 15px;
+}
+
+/* Pour que les boutons restent en bas */
+.bottom-buttons {
+  margin-top: auto; /* pousse les boutons vers le bas */
+  display: flex;
+  justify-content: space-around; /* espace entre les deux boutons */
+  padding: 20px;
+  border-top: 1px solid #ccc;
+  gap : 20px;
+}
+
+.bottom-buttons button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.bottom-buttons button:hover {
+  background-color: #45a049;
+}
+
+/* Pour que les boutons restent en bas */
+.bottom-head {
+  /* margin-top: auto;  */
+  display: flex;
+  justify-content: space-around; /* espace entre les deux boutons */
+  /* padding: 20px; */
+  margin-bottom: 10px;
+  /* border-top: 1px solid #ccc; */
+  gap : 20px;
+}
+
+.bottom-head button {
+  /* padding: 10px 20px; */
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  background-color: transparent;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.bottom-head button:hover {
+  background-color: #dde2dd;
+
+}
