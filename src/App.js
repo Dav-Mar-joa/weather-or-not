@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import CurrentWeather from './components/CurrentWeather';
+import CurrentDay from './components/CurrentDay';
 import Forecast from './components/Forecast';
 
 function App() {
@@ -78,6 +79,8 @@ function App() {
     <div>
       {/* Passe seulement les données actuelles au composant CurrentWeather */}
       <CurrentWeather current={weatherData.current} location={weatherData.location} />
+
+      <CurrentDay current={weatherData.current} location={weatherData.location} astro={weatherData.forecast.forecastday[0].astro}/>
 
       {/* Passe seulement les prévisions au composant Forecast */}
       <Forecast forecast={weatherData.forecast.forecastday} />

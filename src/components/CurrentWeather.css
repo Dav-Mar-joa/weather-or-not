@@ -19,13 +19,64 @@ body {
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(16px);
   border-radius: 24px;
-  padding: 28px 2px 2px 2px;
+  padding: 14px 2px 2px 2px;
   /* margin :0 10px 0 10px; */
   width: 100%;
   max-width: 300px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
   text-align: center;
   border : 2px solid rgba(255, 255, 255, 0.15);
+}
+
+/* carte météo */
+.current-weather-infos {
+  /* background: rgba(255, 255, 255, 0.08); */
+  backdrop-filter: blur(16px);
+  /* border-radius: 24px; */
+  padding: 14px 2px 2px 2px;
+  /* margin :0 10px 0 10px; */
+  width: 100%;
+  max-width: 400px;
+  /* box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35); */
+  text-align: center;
+  /* border : 2px solid rgba(255, 255, 255, 0.15); */
+}
+
+.condition {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly; /* espaces égaux */
+  width: 100%;
+}
+
+.condition p {
+  font-size: 2rem;
+  margin: 0;
+  color:aliceblue
+}
+
+.condition img {
+  width: 3rem;
+  height: 3rem;
+}
+
+.condition-infos {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly; /* espaces égaux */
+  width: 100%;
+}
+
+.condition-infos p {
+  font-size: 0.75rem;
+  margin: 0;
+  margin-top: 5px;
+  color:aliceblue
+}
+
+.condition-infos img {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .datetime {
@@ -45,55 +96,59 @@ body {
 .current-weather p:first-of-type {
   margin-top: 10px;
   font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.7);
+  /* color: rgba(255, 255, 255, 0.7); */
 }
 
 /* température principale */
-.current-weather p:nth-of-type(2) {
+.current-weather p:nth-of-type(1) {
+  /* border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px; */
+  /* padding: 8px 0; */
   font-size: 1.3rem;
   font-weight: 700;
   margin: 10px 0 10px;
+  color:rgb(147, 243, 198);
 }
 
 /* ressenti */
-.current-weather p:nth-of-type(3) {
-  font-size: 0.85rem;
+.current-weather p:nth-of-type(2) {
+  font-size: 0.8rem;
   color: rgba(255, 255, 255, 0.85);
 }
 
 /* description météo */
-.current-weather p:nth-of-type(4) {
-  font-size: 1rem;
+.current-weather p:nth-of-type(3) {
+  font-size: 0.8rem;
   margin: 10px 0 10px;
   text-transform: capitalize;
 }
 /* description météo */
-.current-weather p:nth-of-type(5) {
-  font-size: 1rem;
-  margin: 10px 0 16px;
+.current-weather p:nth-of-type(4) {
+  font-size: 0.8rem;
+  margin: 10px 0 10px;
   text-transform: capitalize;
 }
 
 /* description météo */
-.current-weather p:nth-of-type(6) {
-  font-size: 0.85rem;
+.current-weather p:nth-of-type(5) {
+  font-size: 0.8rem;
   margin: 10px 0 0px;
   text-transform: capitalize;
 }
 
 
 /* icône */
-.current-weather img {
+/* .current-weather img {
   width: 70px;
   height: 70px;
   margin: 3px auto;
-}
+} */
 
 /* infos secondaires */
-.current-weather p {
+/* .current-weather p {
   margin: 6px 0;
   font-size: 0.85rem;
-}
+} */
 
 /* update */
 .current-weather p:last-of-type {
@@ -109,22 +164,22 @@ body {
 
 .weather-card p:first-of-type {
   text-align: center;
-  font-size: 1rem;
+  font-size: 0.9rem;
   margin-bottom:0;
 }
 
 .weather-card p:nth-of-type(2) {
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   margin-bottom: 0;
 }
 
 .weather-card p:nth-of-type(3) {
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   margin-bottom: 0;
 }
 
 .weather-card p:nth-of-type(4) {
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   margin-bottom: 0;
 }
 
