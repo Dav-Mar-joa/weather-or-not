@@ -12,8 +12,10 @@ function CurrentWeather({ current, location ,astro}) {
   return (
     <div className="current-weather-infos">
       <div className = "condition-infos">
-        <img src={sunriseImg} alt="sunrise" />
-        <img src={sunsetImg} alt="sunset" />
+        <p> Sunrise 🌅 </p>  
+        <p>Sunset 🌇</p >
+        {/* <img src={sunriseImg} alt="sunrise" />
+        <img src={sunsetImg} alt="sunset" /> */}
       </div>
       <div className = "condition-infos">
         <p>{astro.sunrise} </p>  

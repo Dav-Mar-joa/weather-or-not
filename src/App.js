@@ -84,6 +84,11 @@ function App() {
 
       {/* Passe seulement les prévisions au composant Forecast */}
       <Forecast forecast={weatherData.forecast.forecastday} />
+      <div className="bottom-buttons">
+        <button onClick={() => alert("Bouton 1 !")}>All day</button>
+        <button onClick={() => alert("Bouton 2 !")}>On 3 days</button>
+
+    </div>
     </div>
   );
 }
