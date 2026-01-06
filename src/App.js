@@ -5,110 +5,157 @@ import Forecast from './components/Forecast';
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
-  // const [city, setCity] = useState('Paris');
+
   const [city, setCity] = useState(
-  () => localStorage.getItem('city') || null
-);
-
-  //   useEffect(() => {
-  //   if (!navigator.geolocation) return;
-
-  //   navigator.geolocation.getCurrentPosition(
-  //     (position) => {
-  //       const { latitude, longitude } = position.coords;
-  //       console.log("latitude :",latitude);
-  //       console.log("longitude :",longitude);
-
-  //       fetch(
-  //         `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=fr`
-  //       )
-  //         .then(res => res.json())
-  //         .then(data => {
-  //           const detectedCity = data.city || data.locality;
-  //           console.log("detectedCity :",detectedCity);
-  //           if (detectedCity) {
-  //             setCity(detectedCity);
-  //             localStorage.setItem('city', detectedCity);
-  //           }
-              
-  //         })
-  //         .catch(() => setCity('Paris'));
-  //     },
-  //     () => setCity('Paris')
-  //   );
-  // }, []);
-
-  useEffect(() => {
-  if (city !== null) return; // 🛑 on a déjà une ville
-
-  if (!navigator.geolocation) return;
-
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-      const { latitude, longitude } = position.coords;
-
-      fetch(
-        `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=fr`
-      )
-        .then(res => res.json())
-        .then(data => {
-          const detectedCity = data.city || data.locality;
-          if (detectedCity) {
-            setCity(detectedCity);
-            localStorage.setItem('city', detectedCity);
-          }
-        });
-    }
+    () => localStorage.getItem('city')
   );
-}, [city]);
 
+  const [locationAllowed, setLocationAllowed] = useState(
+    () => localStorage.getItem('locationAllowed')
+  );
 
+  // 📍 Demande de localisation (une seule fois)
+  const askForLocation = () => {
+    if (!navigator.geolocation) {
+      setCity('Paris');
+      setLocationAllowed('false');
+      localStorage.setItem('locationAllowed', 'false');
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+
+        fetch(
+          `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=fr`
+        )
+          .then(res => res.json())
+          .then(data => {
+            const detectedCity = data.city || data.locality;
+            if (detectedCity) {
+              setCity(detectedCity);
+              localStorage.setItem('city', detectedCity);
+            }
+          });
+
+        setLocationAllowed('true');
+        localStorage.setItem('locationAllowed', 'true');
+      },
+      () => {
+        setCity('Paris');
+        setLocationAllowed('false');
+        localStorage.setItem('locationAllowed', 'false');
+      }
+    );
+  };
+
+  // 🔁 Mise à jour auto de la ville au refresh si autorisé
   useEffect(() => {
-    fetch(`https://api.weatherapi.com/v1/forecast.json?key=f9cc340e26b240188b2195245242805&q=${city}&days=7&aqi=no&alerts=no`)
-      .then(res => res.json())
-      .then(data => {
-        setWeatherData(data); // on garde toute la data brute
-      })
-      
-      .catch(err => console.error(err));
-  }, [city]);
+    if (locationAllowed !== 'true') return;
 
-    const refreshWeather = () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+
+        fetch(
+          `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=fr`
+        )
+          .then(res => res.json())
+          .then(data => {
+            const detectedCity = data.city || data.locality;
+            if (detectedCity && detectedCity !== city) {
+              setCity(detectedCity);
+              localStorage.setItem('city', detectedCity);
+            }
+          });
+      }
+    );
+    console.log("location validated !") ;
+  }, []);
+
+  // 🌦️ Récupération météo
+  useEffect(() => {
     if (!city) return;
 
     fetch(
       `https://api.weatherapi.com/v1/forecast.json?key=f9cc340e26b240188b2195245242805&q=${city}&days=7&aqi=no&alerts=no`
     )
       .then(res => res.json())
-      .then(data => {
-        setWeatherData(data);
-      })
+      .then(data => setWeatherData(data))
       .catch(err => console.error(err));
+  }, [city]);
+
+  // 🔄 Bouton refresh
+  const refreshWeather = () => {
+    if (!city) return;
+
+    if (locationAllowed === 'true') {
+      askForLocation(); // remet à jour la ville si on a bougé
+    } else {
+      fetch(
+        `https://api.weatherapi.com/v1/forecast.json?key=f9cc340e26b240188b2195245242805&q=${city}&days=7&aqi=no&alerts=no`
+      )
+        .then(res => res.json())
+        .then(data => setWeatherData(data));
+        
+    }
+    console.log("data refresh !") ;
   };
 
+  // 🛑 Écran d’autorisation AVANT l’app
+  if (locationAllowed === null) {
+    return (
+      <div className="permission-screen">
+        <h2>📍 Weather Or Not</h2>
+        <p>
+          Autoriser la localisation pour afficher automatiquement
+          la météo là où vous êtes.
+        </p>
+
+        <button onClick={askForLocation}>
+          Autoriser la localisation
+        </button>
+
+        <button
+          onClick={() => {
+            setCity('Paris');
+            setLocationAllowed('false');
+            localStorage.setItem('locationAllowed', 'false');
+          }}
+        >
+          Continuer sans localisation
+        </button>
+      </div>
+    );
+  }
 
   if (!weatherData) return <p>Chargement...</p>;
 
   return (
     <div>
-      {/* Passe seulement les données actuelles au composant CurrentWeather */}
-
       <div className="bottom-head">
         <button onClick={refreshWeather}>🔄 Refresh</button>
-        <button onClick={() => alert("Bouton 2 !")}>📍 Locate</button>
+        <button onClick={askForLocation}>📍 Locate</button>
+      </div>
 
-    </div>
-      <CurrentWeather current={weatherData.current} location={weatherData.location} />
+      <CurrentWeather
+        current={weatherData.current}
+        location={weatherData.location}
+      />
 
-      <CurrentDay current={weatherData.current} location={weatherData.location} astro={weatherData.forecast.forecastday[0].astro}/>
+      <CurrentDay
+        current={weatherData.current}
+        location={weatherData.location}
+        astro={weatherData.forecast.forecastday[0].astro}
+      />
 
-      {/* Passe seulement les prévisions au composant Forecast */}
       <Forecast forecast={weatherData.forecast.forecastday} />
-      <div className="bottom-buttons">
-        <button onClick={() => alert("Bouton 1 !")}>All day</button>
-        <button onClick={() => alert("Bouton 2 !")}>On 3 days</button>
 
-    </div>
+      <div className="bottom-buttons">
+        <button>All day</button>
+        <button>On 3 days</button>
+      </div>
     </div>
   );
 }
