@@ -4,7 +4,10 @@ import Forecast from './components/Forecast';
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
-  const [city, setCity] = useState('Paris');
+  // const [city, setCity] = useState('Paris');
+  const [city, setCity] = useState(
+  () => localStorage.getItem('city') || null
+);
 
     useEffect(() => {
     if (!navigator.geolocation) return;
@@ -22,7 +25,11 @@ function App() {
           .then(data => {
             const detectedCity = data.city || data.locality;
             console.log("detectedCity :",detectedCity);
-            if (detectedCity) setCity(detectedCity);
+            if (detectedCity) {
+              setCity(detectedCity);
+              localStorage.setItem('city', detectedCity);
+            }
+              
           })
           .catch(() => setCity('Paris'));
       },
