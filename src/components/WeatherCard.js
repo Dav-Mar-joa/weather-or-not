@@ -1,6 +1,6 @@
 function WeatherCard({ day }) {
     const days=day.date.split("-")[2]+" / "+day.date.split("-")[1];
-    console.log("day :",day);
+    // console.log("day :",day);
   return (
     <div className="weather-card">
         
