@@ -221,3 +221,30 @@ body {
 .bottom-buttons button:hover {
   background-color: #45a049;
 }
+
+/* Pour que les boutons restent en bas */
+.bottom-head {
+  margin-top: auto; /* pousse les boutons vers le bas */
+  display: flex;
+  justify-content: space-around; /* espace entre les deux boutons */
+  /* padding: 20px; */
+  margin-bottom: 10px;
+  /* border-top: 1px solid #ccc; */
+  gap : 20px;
+}
+
+.bottom-head button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  background-color: transparent;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.bottom-head button:hover {
+  background-color: #dde2dd;
+
+}

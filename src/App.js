@@ -78,6 +78,12 @@ function App() {
   return (
     <div>
       {/* Passe seulement les données actuelles au composant CurrentWeather */}
+
+      <div className="bottom-head">
+        <button onClick={() => alert("Bouton 1 !")}>🔄 Refresh</button>
+        <button onClick={() => alert("Bouton 2 !")}>📍 Locate</button>
+
+    </div>
       <CurrentWeather current={weatherData.current} location={weatherData.location} />
 
       <CurrentDay current={weatherData.current} location={weatherData.location} astro={weatherData.forecast.forecastday[0].astro}/>
