@@ -250,18 +250,17 @@ return (
       </>
     )}
 
-    {view === 'allDay' && (
-      <>
-        {/* Vue journée complète */}
-        <AllDayView hours={weatherData.forecast.forecastday[0].hour} />
+{view === 'allDay' && (
+  <>
+    <AllDayView hours={weatherData.forecast.forecastday[0].hour} />
 
-        {/* 🔘 Boutons pour revenir à la vue Today */}
-        <div className="bottom-buttons">
-          <button onClick={() => setView('today')}>Today</button>
-          {/* <button onClick={() => setView('3Day')}>3 Days</button> */}
-        </div>
-      </>
-    )}
+    <div className="bottom-buttons">
+      <button onClick={() => setView('today')}>Today</button>
+    </div>
+  </>
+)}
+
+
   </div>
 );
 
