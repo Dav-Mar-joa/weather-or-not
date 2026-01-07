@@ -1,6 +1,7 @@
 import React from 'react';
-function AllDayView({ hours }) {
-  const formatDay = (offset = 0) => {
+  function AllDayView({ hours,date }) {
+
+    const formatDay = (offset = 0) => {
     const d = new Date();
     d.setDate(d.getDate() + offset);
 
@@ -19,11 +20,20 @@ function AllDayView({ hours }) {
   // 📊 calculs pour le graph
   const [showTable, setShowTable] = React.useState(false);
   const realTempsMax = Math.max(...hours.map(h => h.temp_c));
-  const tempsMax = realTempsMax + 2; // +2°C pour lisibilité
+//   const tempsMax = realTempsMax + 2; // +2°C pour lisibilité
   const realTempsMin = Math.min(...hours.map(h => h.temp_c));
-  const tempsMin = realTempsMin - 2; // -2°C pour lisibilité
+//   const tempsMin = realTempsMin - 2; // -2°C pour lisibilité
   const realPluieMax = Math.max(...hours.map(h => h.precip_mm));
   const pluieMax = realPluieMax + 1; // +1 mm pour lisibilité
+
+  const realFeelsMax = Math.max(...hours.map(h => h.feelslike_c));
+  const realFeelsMin = Math.min(...hours.map(h => h.feelslike_c));
+
+  const feelsMax = Math.max(realTempsMax, realFeelsMax) + 2;
+  const feelsMin = Math.min(realTempsMin, realFeelsMin) - 2;
+
+  const tempsMax = feelsMax;
+  const tempsMin = feelsMin;
 
   const width = 350;
   const height = 120;
@@ -36,6 +46,12 @@ function AllDayView({ hours }) {
     const y = height - ((h.temp_c - tempsMin) / (tempsMax - tempsMin)) * height;
     return [x, y];
   });
+
+  const pointsFeels = hours.map((h, i) => {
+    const x = paddingLeft + (i / (hours.length - 1)) * (width - paddingLeft - paddingRight);
+    const y = height - ((h.feelslike_c - tempsMin) / (tempsMax - tempsMin)) * height;
+    return [x, y];
+ });
 
   // Points Pluie
   const pointsPluie = hours.map((h, i) => {
@@ -77,7 +93,7 @@ function AllDayView({ hours }) {
       }}
     >
       <h2 style={{ textAlign: 'center', marginBottom: '8px', fontSize: '1rem' }}>
-       {getDayLabel(2)} · {formatDay(2)}
+        {getDayLabel(2)} · {formatDay(2)}
       </h2>
 
       
@@ -106,6 +122,17 @@ function AllDayView({ hours }) {
           {pointsPluie.map((p, i) => (
             <circle key={i} cx={p[0]} cy={p[1]} r="3" fill="#4FC3F7" />
           ))}
+
+          {/* Température ressentie */}
+          {/* <path d={line(pointsFeels)} fill="none"
+          stroke="#FFD166" strokeWidth="2"
+          strokeDasharray="4 4"
+         /> */}
+
+        {pointsFeels.map((p, i) => (
+        <circle key={`feels-${i}`} cx={p[0]} cy={p[1]} r="1.5" fill="#f14545ff" />
+        ))}
+ 
 
           {/* Y Température gauche */}
           {yTempsLabels.map(([y, val], i) => (
@@ -194,6 +221,20 @@ function AllDayView({ hours }) {
             ></span>
             Temp.
           </div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <span
+                style={{
+                display: 'inline-block',
+                width: '12px',
+                height: '12px',
+                border: '2px dashed #ea2929ff',
+                marginRight: '4px',
+                borderRadius: '50%',
+                }}
+            ></span>
+            Feels like
+          </div>
+
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <span
               style={{
