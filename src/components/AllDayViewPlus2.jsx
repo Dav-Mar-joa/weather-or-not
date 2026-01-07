@@ -1,7 +1,6 @@
 import React from 'react';
-  function AllDayView({ hours,date }) {
-
-    const formatDay = (offset = 0) => {
+function AllDayView({ hours }) {
+  const formatDay = (offset = 0) => {
     const d = new Date();
     d.setDate(d.getDate() + offset);
 
@@ -78,7 +77,7 @@ import React from 'react';
       }}
     >
       <h2 style={{ textAlign: 'center', marginBottom: '8px', fontSize: '1rem' }}>
-        {getDayLabel(0)} · {formatDay(0)}
+       {getDayLabel(2)} · {formatDay(2)}
       </h2>
 
       

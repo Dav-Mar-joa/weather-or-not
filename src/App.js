@@ -3,6 +3,8 @@ import CurrentWeather from './components/CurrentWeather';
 import CurrentDay from './components/CurrentDay';
 import Forecast from './components/Forecast';
 import AllDayView from './components/AllDayView';
+import AllDayViewPlus1 from './components/AllDayViewPlus1';
+import AllDayViewPlus2 from './components/AllDayViewPlus2';
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
@@ -222,10 +224,6 @@ return (
   </div>
 )}
 
-
-
-    
-
     {/* 🛑 RENDER CONDITIONNEL SELON LA VUE */}
     {view === 'today' && (
       <>
@@ -245,7 +243,10 @@ return (
         {/* 🔘 Boutons pour switch de vue */}
         <div className="bottom-buttons">
 
-          <button onClick={() => setView('allDay')}>All day</button>
+          <button onClick={() => setView('allDay')}>Today</button>
+ 
+          <button onClick={() => setView('allDayPlus1')}>Day + 1</button>
+          <button onClick={() => setView('allDayPlus2')}>Day +  2</button>
           {/* <button onClick={() => setView('3Day')}>3 Days</button> */}
         </div>
       </>
@@ -253,13 +254,41 @@ return (
 
 {view === 'allDay' && (
   <>
-    <AllDayView hours={weatherData.forecast.forecastday[0].hour} />
+    <AllDayView hours={weatherData.forecast.forecastday[0].hour} date={weatherData.forecast.forecastday[0].date} />
 
     <div className="bottom-buttons">
-      <button onClick={() => setView('today')}>Today</button>
+      <button onClick={() => setView('today')}>Resume</button>
+      <button onClick={() => setView('allDayPlus1')}>Day + 1</button>
+      <button onClick={() => setView('allDayPlus2')}>Day + 2</button>
     </div>
   </>
 )}
+
+{view === 'allDayPlus1' && (
+  <>
+    <AllDayViewPlus1 hours={weatherData.forecast.forecastday[1].hour}
+    date={weatherData.forecast.forecastday[1].date} 
+    />
+
+    <div className="bottom-buttons">
+      <button onClick={() => setView('today')}>Resume</button>
+      <button onClick={() => setView('allDay')}>Day</button>
+      <button onClick={() => setView('allDayPlus2')}>Day + 2</button>
+    </div>
+  </>
+)}{view === 'allDayPlus2' && (
+  <>
+    <AllDayViewPlus2 hours={weatherData.forecast.forecastday[2].hour} 
+    date={weatherData.forecast.forecastday[2].date}/>
+
+    <div className="bottom-buttons">
+      <button onClick={() => setView('today')}>Resume</button>
+      <button onClick={() => setView('allDay')}>Day</button>
+      <button onClick={() => setView('allDayPlus1')}>Day + 1</button>
+    </div>
+  </>
+)}
+ 
 
 
   </div>

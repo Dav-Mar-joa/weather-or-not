@@ -1,7 +1,7 @@
 import React from 'react';
-  function AllDayView({ hours,date }) {
-
-    const formatDay = (offset = 0) => {
+function AllDayView({ hours }) {
+  
+  const formatDay = (offset = 0) => {
     const d = new Date();
     d.setDate(d.getDate() + offset);
 
@@ -16,7 +16,7 @@ import React from 'react';
     if (offset === 1) return "Demain";
     if (offset === 2) return "Après-demain";
     return formatDay(offset);
-    };  
+    }; 
   // 📊 calculs pour le graph
   const [showTable, setShowTable] = React.useState(false);
   const realTempsMax = Math.max(...hours.map(h => h.temp_c));
@@ -78,7 +78,7 @@ import React from 'react';
       }}
     >
       <h2 style={{ textAlign: 'center', marginBottom: '8px', fontSize: '1rem' }}>
-        {getDayLabel(0)} · {formatDay(0)}
+        {getDayLabel(1)} · {formatDay(1)}
       </h2>
 
       
