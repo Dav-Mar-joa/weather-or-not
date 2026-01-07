@@ -269,12 +269,12 @@ body {
   border: none;
   background-color: transparent;
   color: white;
-  transition: background-color 0.3s;
+  transition: background-color 0.1s;
 }
 
-.bottom-head button:hover {
+/* .bottom-head button:hover {
   background-color: #dde2dd;
-}
+} */
 
 @supports (height: 100dvh) {
   body,

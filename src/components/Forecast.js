@@ -1,6 +1,11 @@
 import WeatherCard from './WeatherCard';
 
+
 function Forecast({ forecast }) {
+console.log("Forecast component loaded");
+console.log("--------------------------");
+console.log(forecast);
+console.log("--------------------------");
   return (
     <div className="forecast">
       <h2 style={{marginTop:"25px",marginBottom:"0px",fontSize:"1.1rem"}}>Prévisions </h2>

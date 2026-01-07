@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import CurrentWeather from './components/CurrentWeather';
 import CurrentDay from './components/CurrentDay';
 import Forecast from './components/Forecast';
+import AllDayView from './components/AllDayView';
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
@@ -13,6 +14,8 @@ function App() {
   const [locationAllowed, setLocationAllowed] = useState(
     () => localStorage.getItem('locationAllowed')
   );
+
+  const [view, setView] = useState('today'); // 'today' ou 'allDay'
 
   // 📍 Demande de localisation (une seule fois)
   const askForLocation = () => {
@@ -132,32 +135,83 @@ function App() {
 
   if (!weatherData) return <p>Chargement...</p>;
 
-  return (
-    <div>
-      <div className="bottom-head">
-        <button onClick={refreshWeather}>🔄 Refresh</button>
-        <button onClick={askForLocation}>📍 Locate</button>
-      </div>
+  // return (
+  //   <div>
+  //     <div className="bottom-head">
+  //       <button onClick={refreshWeather}>🔄 Refresh</button>
+  //       <button onClick={askForLocation}>📍 Locate</button>
+  //     </div>
 
-      <CurrentWeather
-        current={weatherData.current}
-        location={weatherData.location}
-      />
+  //     <CurrentWeather
+  //       current={weatherData.current}
+  //       location={weatherData.location}
+  //     />
 
-      <CurrentDay
-        current={weatherData.current}
-        location={weatherData.location}
-        astro={weatherData.forecast.forecastday[0].astro}
-      />
+  //     <CurrentDay
+  //       current={weatherData.current}
+  //       location={weatherData.location}
+  //       astro={weatherData.forecast.forecastday[0].astro}
+  //     />
 
-      <Forecast forecast={weatherData.forecast.forecastday} />
+  //     <Forecast forecast={weatherData.forecast.forecastday} />
 
-      <div className="bottom-buttons">
-        <button>All day</button>
-        <button>On 3 days</button>
-      </div>
+  //     <div className="bottom-buttons">
+  //       <button onClick={() => setView('today')}>Today</button>
+  //       <button onClick={() => setView('allDay')}>All day</button>
+  //     </div>
+  //   </div>
+  // );
+
+return (
+  <div>
+    {/* 🟢 Boutons pour refresh et localisation */}
+    <div className="bottom-head">
+      <button onClick={refreshWeather}>🔄 Refresh</button>
+      <button onClick={askForLocation}>📍 Locate</button>
     </div>
-  );
+
+    {/* 🛑 RENDER CONDITIONNEL SELON LA VUE */}
+    {view === 'today' && (
+      <>
+        <CurrentWeather
+          current={weatherData.current}
+          location={weatherData.location}
+        />
+
+        <CurrentDay
+          current={weatherData.current}
+          location={weatherData.location}
+          astro={weatherData.forecast.forecastday[0].astro}
+        />
+
+        <Forecast forecast={weatherData.forecast.forecastday} />
+
+        {/* 🔘 Boutons pour switch de vue */}
+        <div className="bottom-buttons">
+          <button onClick={() => setView('today')}>Today</button>
+          <button onClick={() => setView('allDay')}>All day</button>
+        </div>
+      </>
+    )}
+
+    {view === 'allDay' && (
+      <>
+        {/* Vue journée complète */}
+        <AllDayView hours={weatherData.forecast.forecastday[0].hour} />
+
+        {/* 🔘 Boutons pour revenir à la vue Today */}
+        <div className="bottom-buttons">
+          <button onClick={() => setView('today')}>Today</button>
+          <button onClick={() => setView('allDay')}>All day</button>
+        </div>
+      </>
+    )}
+  </div>
+);
+
+
 }
+
+
 
 export default App;
