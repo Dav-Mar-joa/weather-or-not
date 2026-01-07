@@ -168,12 +168,13 @@ function App() {
 return (
   <div>
     {/* 🟢 Boutons pour refresh et localisation */}
-    <div className="bottom-head">
+    <div className="bottom-head" style={view === 'allDay' ? { marginTop: '4rem' } : { marginTop: '0' }}>
+      
       <button onClick={refreshWeather}>🔄 Refresh</button>
       <button onClick={askForLocation}>📍 </button>
       <button onClick={() => {
         setManualCity(''); 
-        setShowCityInput(true);}
+        setShowCityInput(prev=>!prev);}
         }>✏️ Where ?</button>
     </div>
 

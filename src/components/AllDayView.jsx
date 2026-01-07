@@ -1,5 +1,7 @@
+import React from 'react';
 function AllDayView({ hours }) {
   // 📊 calculs pour le graph
+  const [showTable, setShowTable] = React.useState(true);
   const realTempsMax = Math.max(...hours.map(h => h.temp_c));
   const tempsMax = realTempsMax + 2; // +2°C pour lisibilité
   const realTempsMin = Math.min(...hours.map(h => h.temp_c));
@@ -61,6 +63,8 @@ function AllDayView({ hours }) {
       <h2 style={{ textAlign: 'center', marginBottom: '8px', fontSize: '1.2rem' }}>
         All day
       </h2>
+
+      
 
       {/* === Graph Température & Pluie === */}
       <div className="graph-container" style={{ margin: '0 auto 16px', maxWidth: '380px' }}>
@@ -157,7 +161,7 @@ function AllDayView({ hours }) {
           style={{
             display: 'flex',
             justifyContent: 'space-around',
-            marginTop: '4px',
+            marginTop: '8px',
             fontSize: '0.75rem',
           }}
         >
@@ -190,45 +194,56 @@ function AllDayView({ hours }) {
         </div>
       </div>
 
-      {/* === Tableau des heures === */}
-      <table
+      <div style={{ textAlign: 'center', margin: '10px 0' }}>
+        <button onClick={() => setShowTable(!showTable)}>
+          {showTable ? 'Masquer le tableau' : 'Afficher le tableau'}
+        </button>
+      </div>
+
+    {/* === Tableau des heures === */}
+    {showTable && (
+    <table
         style={{
-          width: '100%',
-          borderCollapse: 'collapse',
-          fontSize: '0.8rem',
+        width: '100%',
+        borderCollapse: 'collapse',
+        fontSize: '0.8rem',
         }}
-      >
+    >
         <thead>
-          <tr>
+        <tr>
             <th style={{ borderBottom: '1px solid rgba(255,255,255,0.3)', padding: '4px' }}>Hour</th>
             <th style={{ borderBottom: '1px solid rgba(255,255,255,0.3)', padding: '4px' }}>Temp</th>
             <th style={{ borderBottom: '1px solid rgba(255,255,255,0.3)', padding: '4px' }}>Feels like</th>
             <th style={{ borderBottom: '1px solid rgba(255,255,255,0.3)', padding: '4px' }}>🌬️ Wind</th>
             <th style={{ borderBottom: '1px solid rgba(255,255,255,0.3)', padding: '4px' }}>🌧 Rain</th>
             <th style={{ borderBottom: '1px solid rgba(255,255,255,0.3)', padding: '4px' }}>💧 Précip</th>
-          </tr>
+        </tr>
         </thead>
         <tbody>
-          {hours.map((h, index) => (
+        {hours.map((h, index) => (
             <tr key={index} style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-              <td style={{ padding: '2px', textAlign: 'center' }}>
+            <td style={{ padding: '2px', textAlign: 'center' }}>
                 {h.time.split(' ')[1].slice(0, 2)}h
-              </td>
-              <td style={{ padding: '4px', textAlign: 'center' }}>{h.temp_c.toFixed(1)}°C</td>
-              <td style={{ padding: '4px', textAlign: 'center' }}>{h.feelslike_c.toFixed(1)}°C</td>
-              <td style={{ padding: '4px', textAlign: 'center' }}>
-                {h.wind_kph !== 0 ? `${h.wind_kph}km/h` : ''}
-              </td>
-              <td style={{ padding: '4px', textAlign: 'center' }}>
+            </td>
+            <td style={{ padding: '4px', textAlign: 'center' }}>{h.temp_c.toFixed(1)}°C</td>
+            <td style={{ padding: '4px', textAlign: 'center' }}>{h.feelslike_c.toFixed(1)}°C</td>
+            <td style={{ padding: '4px', textAlign: 'center' }}>
+                {h.wind_kph !== 0 ? `${h.wind_kph} km/h` : ''}
+            </td>
+            <td style={{ padding: '4px', textAlign: 'center' }}>
                 {h.precip_mm !== 0 ? `${h.precip_mm}%` : '-'}
-              </td>
-              <td style={{ padding: '4px', textAlign: 'center' }}>
+            </td>
+            <td style={{ padding: '4px', textAlign: 'center' }}>
                 {h.precip_mm !== 0 ? `${h.precip_mm.toFixed(1)} mm` : '-'}
-              </td>
+            </td>
             </tr>
-          ))}
+        ))}
         </tbody>
-      </table>
+    </table>
+    )}
+
+    
+    
     </div>
   );
 }
