@@ -168,7 +168,7 @@ function App() {
 return (
   <div>
     {/* 🟢 Boutons pour refresh et localisation */}
-    <div className="bottom-head" style={view === 'allDay' ? { marginTop: '4rem' } : { marginTop: '0' }}>
+    <div className="bottom-head" style={view === 'allDay' ? { marginTop: '2rem' } : { marginTop: '0' }}>
       
       <button onClick={refreshWeather}>🔄 Refresh</button>
       <button onClick={askForLocation}>📍 </button>
