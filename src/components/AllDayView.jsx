@@ -1,7 +1,7 @@
 import React from 'react';
 function AllDayView({ hours }) {
   // 📊 calculs pour le graph
-  const [showTable, setShowTable] = React.useState(true);
+  const [showTable, setShowTable] = React.useState(false);
   const realTempsMax = Math.max(...hours.map(h => h.temp_c));
   const tempsMax = realTempsMax + 2; // +2°C pour lisibilité
   const realTempsMin = Math.min(...hours.map(h => h.temp_c));
@@ -196,7 +196,7 @@ function AllDayView({ hours }) {
 
       <div style={{ textAlign: 'center', margin: '10px 0' }}>
         <button onClick={() => setShowTable(!showTable)}>
-          {showTable ? 'Masquer le tableau' : 'Afficher le tableau'}
+          {showTable ? 'Masquer les données' : 'Afficher les données'}
         </button>
       </div>
 
