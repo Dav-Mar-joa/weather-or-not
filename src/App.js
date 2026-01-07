@@ -17,6 +17,9 @@ function App() {
 
   const [view, setView] = useState('today'); // 'today' ou 'allDay'
 
+  const [showCityInput, setShowCityInput] = useState(false); // affiche le champ
+  const [manualCity, setManualCity] = useState(''); // ce que l'utilisateur tape
+
   // 📍 Demande de localisation (une seule fois)
   const askForLocation = () => {
     if (!navigator.geolocation) {
@@ -167,8 +170,61 @@ return (
     {/* 🟢 Boutons pour refresh et localisation */}
     <div className="bottom-head">
       <button onClick={refreshWeather}>🔄 Refresh</button>
-      <button onClick={askForLocation}>📍 Locate</button>
+      <button onClick={askForLocation}>📍 </button>
+      <button onClick={() => {
+        setManualCity(''); 
+        setShowCityInput(true);}
+        }>✏️ Where ?</button>
     </div>
+
+    {/* {showCityInput && (
+  <div style={{ marginTop: '10px' }}>
+    <input
+      type="text"
+      placeholder="Entrez une ville"
+      value={manualCity}
+      onChange={(e) => setManualCity(e.target.value)}
+      style={{ padding: '4px', marginRight: '4px' }}
+    />
+    <button
+      onClick={() => {
+        if (!manualCity.trim()) return;
+        setCity(manualCity.trim());
+        localStorage.setItem('city', manualCity.trim());
+        setLocationAllowed('false'); // pas de géoloc
+        setShowCityInput(false); // cache le champ après validation
+      }}
+    >
+      Valider
+    </button>
+  </div>
+)} */}
+
+  {showCityInput && (
+  <div className="city-input-container">
+    <input
+      type="text"
+      placeholder="Entrez une ville"
+      value={manualCity}
+      onChange={(e) => setManualCity(e.target.value)}
+    />
+    <button
+      onClick={() => {
+        if (!manualCity.trim()) return;
+        setCity(manualCity.trim());
+        localStorage.setItem('city', manualCity.trim());
+        setLocationAllowed('false'); // désactive géoloc
+        setShowCityInput(false);
+      }}
+    >
+      Valider
+    </button>
+  </div>
+)}
+
+
+
+    
 
     {/* 🛑 RENDER CONDITIONNEL SELON LA VUE */}
     {view === 'today' && (
@@ -188,8 +244,9 @@ return (
 
         {/* 🔘 Boutons pour switch de vue */}
         <div className="bottom-buttons">
-          <button onClick={() => setView('today')}>Today</button>
+
           <button onClick={() => setView('allDay')}>All day</button>
+          {/* <button onClick={() => setView('3Day')}>3 Days</button> */}
         </div>
       </>
     )}
@@ -202,7 +259,7 @@ return (
         {/* 🔘 Boutons pour revenir à la vue Today */}
         <div className="bottom-buttons">
           <button onClick={() => setView('today')}>Today</button>
-          <button onClick={() => setView('allDay')}>All day</button>
+          {/* <button onClick={() => setView('3Day')}>3 Days</button> */}
         </div>
       </>
     )}
