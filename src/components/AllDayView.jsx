@@ -45,13 +45,13 @@ function AllDayView({ hours }) {
                 {h.feelslike_c.toFixed(1)}°C
               </td>
               <td style={{ padding: '4px', textAlign: 'center' }}>
-                {h.wind_kph} km/h
+                {h.wind_kph !== 0 ? `${h.wind_kph}km/h` : ""}
                 </td>
               <td style={{ padding: '4px', textAlign: 'center' }}>
-                {h.chance_of_rain}%
+                {h.chance_of_rain != 0 ? `${h.chance_of_rain}%` : ""}
               </td>
               <td style={{ padding: '4px', textAlign: 'center' }}>
-                {h.precip_mm.toFixed(1)} mm
+                {h.precip_mm.toFixed(1) !=0 ? `${h.precip_mm.toFixed(1)} mm` : ''}
               </td>
             </tr>
           ))}
