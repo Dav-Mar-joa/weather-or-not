@@ -217,8 +217,7 @@ return (
         setShowCityInput(false);
       }}
     >
-      Valider
-    </button>
+       ✅   </button>
   </div>
 )}
 
