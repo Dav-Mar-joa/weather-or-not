@@ -4,16 +4,16 @@ function AllDayView({ hours }) {
     const d = new Date();
     d.setDate(d.getDate() + offset);
 
-    return d.toLocaleDateString('fr-FR', {
+    return d.toLocaleDateString('en-EN', {
         weekday: 'long',
         day: 'numeric',
         month: 'long'
     });
     };  
   const getDayLabel = (offset) => {
-    if (offset === 0) return "Aujourd’hui";
-    if (offset === 1) return "Demain";
-    if (offset === 2) return "Après-demain";
+    if (offset === 0) return "Today";
+    if (offset === 1) return "Tomorrow";
+    if (offset === 2) return "After tomorrow";
     return formatDay(offset);
     };  
   // 📊 calculs pour le graph
