@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import CurrentWeather from './components/CurrentWeather';
 import CurrentDay from './components/CurrentDay';
 import Forecast from './components/Forecast';
@@ -11,6 +11,10 @@ function App() {
 
   const [city, setCity] = useState(
     () => localStorage.getItem('city')
+  );
+
+   const [quality, setQuality] = useState(
+    () => localStorage.getItem('quality')
   );
 
   const [locationAllowed, setLocationAllowed] = useState(
@@ -61,6 +65,7 @@ function App() {
   // 🔁 Mise à jour auto de la ville au refresh si autorisé
   useEffect(() => {
     if (locationAllowed !== 'true') return;
+    const openWeatherApiKey = '2dec67f041a37a3333796cc816ca6b9e';
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -77,6 +82,16 @@ function App() {
               localStorage.setItem('city', detectedCity);
             }
           });
+
+            
+        fetch(`https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=${latitude}&lon=${longitude}&appid=${openWeatherApiKey}&units=metric&lang=fr`)
+        .then(res => res.json())
+        .then(data => {
+          setQuality(data);
+          console.log("data air quality :",data);
+          localStorage.setItem('quality', JSON.stringify(data));
+        });
+
       }
     );
     console.log("location validated !") ;
@@ -230,6 +245,7 @@ return (
         <CurrentWeather
           current={weatherData.current}
           location={weatherData.location}
+          quality={quality}
         />
 
         <CurrentDay

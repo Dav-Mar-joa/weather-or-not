@@ -135,7 +135,7 @@ body {
 }
 
 .condition-infos p {
-  font-size: 1rem;
+  font-size: 0.9rem;
   margin: 0;
   margin-top: 0.3125rem;
   color: aliceblue;
@@ -154,7 +154,7 @@ body {
 /* ville */
 .current-weather h2 {
   margin: 0;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   font-weight: 600;
   letter-spacing: 0.03125rem;
 }
@@ -167,7 +167,7 @@ body {
 
 /* température principale */
 .current-weather p:nth-of-type(1) {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 700;
   margin: 0.625rem 0;
   color: rgb(147, 243, 198);
@@ -184,7 +184,7 @@ body {
 .current-weather p:nth-of-type(4) {
   font-size: 0.8rem;
   margin: 0.625rem 0;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 
 .current-weather p:nth-of-type(5) {
@@ -235,6 +235,7 @@ body {
   display: flex;
   justify-content: space-around;
   padding: 1.25rem;
+  padding-top: 0.75rem;
   border-top: 0.0625rem solid #ccc;
   gap: 1.25rem;
 }
@@ -242,8 +243,9 @@ body {
 .bottom-buttons button {
   padding: 0.625rem 0.8rem;
   font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
-  border-radius: 0.3125rem;
+  border-radius: 1.5rem;
   border: none;
   background-color: #4caf50;
   color: white;

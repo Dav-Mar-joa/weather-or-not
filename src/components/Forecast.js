@@ -8,7 +8,7 @@ console.log(forecast);
 console.log("--------------------------");
   return (
     <div className="forecast">
-      <h2 style={{marginTop:"25px",marginBottom:"0px",fontSize:"1.1rem"}}>Weather forecast </h2>
+      <h2 style={{marginTop:"12px",marginBottom:"0px",fontSize:"1.1rem"}}>Weather forecast </h2>
       <div style={{
         display: 'flex',
         justifyContent: 'space-between',
