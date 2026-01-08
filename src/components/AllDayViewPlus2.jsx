@@ -376,18 +376,28 @@ import React from 'react';
   <tbody>
   <tr>
     <td style={{ padding: '6px' }}>
-      <br/>Min <br/>  
+      <div style={{ paddingTop:'8px' }}>
+        Min <br/> 
+      </div>
+       
       <br/><br/>Max <br/>
     </td>
-    <td style={{ padding: '6px' }}>
+    <td style={{ padding: '6px', paddingBottom:'8px' }}>
       <div style={{ borderBottom: '1px solid white', paddingBottom: '16px' }}>
-        <br/>{tMin[0]}°C <br/>( {tMinHour}h )  
+        <div style={{ paddingTop:'8px' }}>
+         {tMin[0]}°C <br/>( {tMinHour}h )  
+        </div>
+         
       </div>
       <br/>{tMax[0]}°C <br/>( {tMaxHour}h )
+      <br/>
     </td>
-    <td style={{ padding: '6px' }}>
+    <td style={{ padding: '6px', paddingBottom:'8px' }}>
       <div style={{ borderBottom: '1px solid white', paddingBottom:'16px' }}>
-        <br/>{tMinFeel[0]}°C <br/>( {tMinFeelHour}h )
+        <div style={{ paddingTop:'8px' }}>
+          {tMinFeel[0]}°C <br/>( {tMinFeelHour}h )
+        </div>
+        
       </div>
       <br/>{tMaxFeel[0]}°C <br/>( {tMaxFeelHour}h )<br/>
     </td>
