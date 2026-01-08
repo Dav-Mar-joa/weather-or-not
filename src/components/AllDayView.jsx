@@ -406,7 +406,7 @@ import React from 'react';
 
 
 
-      <div style={{ textAlign: 'center', margin: '30px 0' }}>
+      <div style={{ textAlign: 'center', margin: '30px 0 16px 0' }}>
         <button onClick={() => setShowTable(!showTable)}>
           {showTable ? 'Masquer les données' : 'Afficher les données'}
         </button>
