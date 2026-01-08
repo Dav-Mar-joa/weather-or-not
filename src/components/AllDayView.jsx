@@ -381,21 +381,21 @@ import React from 'react';
     </td>
     <td style={{ padding: '6px' }}>
       <div style={{ borderBottom: '1px solid white', paddingBottom: '16px' }}>
-        <br/>{tMin[0]}°C <br/>({tMinHour}h)  
+        <br/>{tMin[0]}°C <br/>( {tMinHour}h )  
       </div>
-      <br/>{tMax[0]}°C <br/>({tMaxHour}h)
+      <br/>{tMax[0]}°C <br/>( {tMaxHour}h )
     </td>
     <td style={{ padding: '6px' }}>
       <div style={{ borderBottom: '1px solid white', paddingBottom:'16px' }}>
-        <br/>{tMinFeel[0]}°C <br/>({tMinFeelHour}h)
+        <br/>{tMinFeel[0]}°C <br/>( {tMinFeelHour}h )
       </div>
-      <br/>{tMaxFeel[0]}°C <br/>({tMaxFeelHour}h)<br/>
+      <br/>{tMaxFeel[0]}°C <br/>( {tMaxFeelHour}h )<br/>
     </td>
     <td style={{ padding: '6px' }}>
-       {windMax[0]} km/h <br/><br/>({windMaxHour}h)
+       {windMax[0]} km/h <br/><br/>( {windMaxHour}h )
     </td>
     <td style={{ padding: '6px' }}>
-      {rainMax[0]} mm <br/>({rainMaxHour}h)
+      {rainMax[0]} mm <br/><br/>( {rainMaxHour}h )
     </td>
   </tr>
 </tbody>
