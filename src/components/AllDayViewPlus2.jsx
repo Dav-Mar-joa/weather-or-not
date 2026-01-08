@@ -47,6 +47,79 @@ import React from 'react';
     return [x, y];
   });
 
+  // 🔥 Top 3 valeurs MAX
+  const top3Wind = [...hours]
+    .map(h => h.wind_kph)
+    .sort((a, b) => b - a)
+    .slice(0, 1);
+
+  const tMax =  [...hours]
+    .map(h => h.temp_c)
+    .sort((a, b) => b - a)
+    .slice(0, 1);
+  
+  const tMaxHour = hours.find(h => h.temp_c === tMax[0])?.time. split(' ')[1].slice(0, 2);
+
+  const tMin =  [...hours]
+    .map(h => h.temp_c)
+    .sort((a, b) => a - b)
+    .slice(0, 1);
+
+  const tMinHour = hours.find(h => h.temp_c === tMin[0])?.time.split(' ')[1].slice(0, 2);
+  
+  const tMaxFeel =  [...hours]
+    .map(h => h.feelslike_c)
+    .sort((a, b) => b - a)
+    .slice(0, 1);
+  
+  const tMaxFeelHour = hours.find(h => h.feelslike_c === tMaxFeel[0])?.time.split(' ')[1].slice(0, 2);
+  
+  const tMinFeel =  [...hours]
+    .map(h => h.feelslike_c)
+    .sort((a, b) => a - b)
+    .slice(0, 1);
+  
+  const tMinFeelHour = hours.find(h => h.feelslike_c === tMinFeel[0])?.time.split(' ')[1].slice(0, 2);
+  
+  const windMax =  [...hours]
+    .map(h => h.wind_kph)
+    .sort((a, b) => b - a)
+    .slice(0, 1);
+  
+  const windMaxHour = hours.find(h => h.wind_kph === windMax[0])?.time.split(' ')[1].slice(0, 2);
+  
+  const rainMax =  [...hours]
+    .map(h => h.precip_mm)
+    .sort((a, b) => b - a)
+    .slice(0, 1);   
+  
+  const rainMaxHour = hours.find(h => h.precip_mm === rainMax[0])?.time.split(' ')[1].slice(0, 2);
+
+  // console.log("rainMaxHour :",rainMaxHour);
+  // console.log("rainMax :",rainMax);
+  // console.log("tMinHour :",tMinHour);
+  // console.log("tMin :",tMin);
+  // console.log("tMaxHour :",tMaxHour);
+  // console.log("tMax :",tMax); 
+  // console.log("windMaxHour :",windMaxHour);
+  // console.log("windMax :",windMax);
+  // console.log("tMaxFeelHour :",tMaxFeelHour);
+  // console.log("tMaxFeel :",tMaxFeel);
+  // console.log("tMinFeelHour :",tMinFeelHour);
+  // console.log("tMinFeel :",tMinFeel);
+
+  const getWindColor = (wind) => {
+    if (top3Wind.includes(wind) && wind > 0) return '#FF4D4D';
+    if (wind >= 25) return '#FF8C00';
+    if (wind >= 12) return '#FFD700';
+    return 'white';
+  };
+
+  const top3Rain = [...hours]
+    .map(h => h.precip_mm)
+    .sort((a, b) => b - a)
+    .slice(0, 3);
+
   const pointsFeels = hours.map((h, i) => {
     const x = paddingLeft + (i / (hours.length - 1)) * (width - paddingLeft - paddingRight);
     const y = height - ((h.feelslike_c - tempsMin) / (tempsMax - tempsMin)) * height;
@@ -251,6 +324,58 @@ import React from 'react';
         </div>
       </div>
 
+      {/* <div style={{ marginBottom: '16px', fontSize: '0.8rem' }}   >
+        <p>🔥 Max Temp : {tMax[0]}°C ({tMaxHour}h) - ❄️ Min Temp : {tMin[0]}°C ({tMinHour}h)</p>
+        <p>🔥 Max Feels like : {tMaxFeel[0]}°C ({tMaxFeelHour}h) - ❄️ Min Feels like : {tMinFeel[0]}°C ({tMinFeelHour}h)</p>
+        <p>🌬️ Max Wind : {windMax[0]} km/h ({windMaxHour}h) - 🌧️ Max Rain : {rainMax[0]} mm ({rainMaxHour}h)</p>
+      </div> */}
+
+        <div style={{ margin: '16px 0', fontSize: '0.85rem' }}>
+  <table
+    style={{
+      width: '100%',
+      borderCollapse: 'collapse',
+      textAlign: 'center',
+      backgroundColor: 'rgba(255,255,255,0.05)',
+      borderRadius: '8px',
+      overflow: 'hidden'
+    }}
+  >
+    <thead style={{ backgroundColor: 'rgba(255,255,255,0.1)' }}>
+      <tr>
+        <th style={{ padding: '6px' }}>🔥 Temp</th>
+        <th style={{ padding: '6px' }}>Feels like</th>
+        <th style={{ padding: '6px' }}>🌬️ Wind</th>
+        <th style={{ padding: '6px' }}>🌧️ Rain</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style={{ padding: '6px' }}>
+          <br/>
+          Max: {tMax[0]}°C ({tMaxHour}h)<br/>
+          <br/>
+          Min: {tMin[0]}°C ({tMinHour}h)
+        </td>
+        <td style={{ padding: '6px' }}>
+          <br/>
+          Max: {tMaxFeel[0]}°C ({tMaxFeelHour}h)<br/>
+          <br/>
+          Min: {tMinFeel[0]}°C ({tMinFeelHour}h)
+        </td>
+        <td style={{ padding: '6px' }}>
+          Max: {windMax[0]} km/h ({windMaxHour}h)
+        </td>
+        <td style={{ padding: '6px' }}>
+          Max: {rainMax[0]} mm ({rainMaxHour}h)
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
       <div style={{ textAlign: 'center', margin: '10px 0' }}>
         <button onClick={() => setShowTable(!showTable)}>
           {showTable ? 'Masquer les données' : 'Afficher les données'}
@@ -284,15 +409,49 @@ import React from 'react';
             </td>
             <td style={{ padding: '4px', textAlign: 'center' }}>{h.temp_c.toFixed(1)}°C</td>
             <td style={{ padding: '4px', textAlign: 'center' }}>{h.feelslike_c.toFixed(1)}°C</td>
-            <td style={{ padding: '4px', textAlign: 'center' }}>
+            {/* <td style={{ padding: '4px', textAlign: 'center' }}>
                 {h.wind_kph !== 0 ? `${h.wind_kph} km/h` : ''}
+            </td> */}
+            {/* <td
+              style={{
+                padding: '4px',
+                textAlign: 'center',
+                color: top3Wind.includes(h.wind_kph) && h.wind_kph > 0
+                  ? '#FF4D4D'
+                  : 'white',
+                fontWeight: top3Wind.includes(h.wind_kph) ? 'bold' : 'normal'
+              }}
+            >
+              {h.wind_kph !== 0 ? `${h.wind_kph} km/h` : '-'}
+            </td> */}
+            <td style={{ color: getWindColor(h.wind_kph) }}>
+              {h.wind_kph !== 0 ? `${h.wind_kph} km/h` : '-'}
             </td>
+
+
             <td style={{ padding: '4px', textAlign: 'center' }}>
                 {h.precip_mm !== 0 ? `${h.precip_mm}%` : '-'}
             </td>
-            <td style={{ padding: '4px', textAlign: 'center' }}>
+            {/* <td style={{ padding: '4px', textAlign: 'center' }}>
                 {h.precip_mm !== 0 ? `${h.precip_mm.toFixed(1)} mm` : '-'}
+            </td> */}
+            <td
+              style={{
+                padding: '4px',
+                textAlign: 'center',
+                color: top3Rain.includes(h.precip_mm) && h.precip_mm > 0
+                  ? '#FF4D4D'
+                  : 'white',
+                fontWeight: top3Rain.includes(h.precip_mm) ? 'bold' : 'normal'
+              }}
+            >
+              {h.precip_mm !== 0 ? `${h.precip_mm.toFixed(1)} mm` : '-'}
             </td>
+
+            {/* <td style={{ color: getWindColor(h.wind_kph) }}>
+              {h.wind_kph !== 0 ? `${h.wind_kph} km/h` : '-'}
+            </td> */}
+
             </tr>
         ))}
         </tbody>
