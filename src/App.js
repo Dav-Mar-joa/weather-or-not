@@ -8,6 +8,8 @@ import AllDayViewPlus2 from './components/AllDayViewPlus2';
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
+  const [loading, setLoading] = useState(false);
+
 
   const [city, setCity] = useState(
     () => localStorage.getItem('city')
@@ -110,21 +112,79 @@ function App() {
   }, [city]);
 
   // 🔄 Bouton refresh
-  const refreshWeather = () => {
-    if (!city) return;
+  // const refreshWeather = () => {
+  //   if (!city) return;
 
-    if (locationAllowed === 'true') {
-      askForLocation(); // remet à jour la ville si on a bougé
-    } else {
-      fetch(
-        `https://api.weatherapi.com/v1/forecast.json?key=f9cc340e26b240188b2195245242805&q=${city}&days=7&aqi=no&alerts=no`
-      )
-        .then(res => res.json())
-        .then(data => setWeatherData(data));
+  //   if (locationAllowed === 'true') {
+  //     askForLocation(); // remet à jour la ville si on a bougé
+  //   } else {
+  //     fetch(
+  //       `https://api.weatherapi.com/v1/forecast.json?key=f9cc340e26b240188b2195245242805&q=${city}&days=7&aqi=no&alerts=no`
+  //     )
+  //       .then(res => res.json())
+  //       .then(data => setWeatherData(data));
         
-    }
-    console.log("data refresh !") ;
-  };
+  //   }
+  //   console.log("data refresh !") ;
+  // };
+
+  const refreshWeather = () => {
+  if (!city) return;
+  setLoading(true);
+
+  // Si la géoloc est activée, on récupère la ville actuelle
+  if (locationAllowed === 'true') {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+
+        fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=fr`)
+          .then(res => res.json())
+          .then(data => {
+            const detectedCity = data.city || data.locality || city;
+            setCity(detectedCity);
+            localStorage.setItem('city', detectedCity);
+
+            // ⚡ On fetch la météo **immédiatement** pour la ville détectée
+            fetch(`https://api.weatherapi.com/v1/forecast.json?key=f9cc340e26b240188b2195245242805&q=${detectedCity}&days=7&aqi=no&alerts=no`)
+              .then(res => res.json())
+              .then(data => setWeatherData(data))
+              .catch(err => console.error(err));
+
+            // ⚡ On fetch la qualité de l'air
+            const openWeatherApiKey = '2dec67f041a37a3333796cc816ca6b9e';
+            fetch(`https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=${latitude}&lon=${longitude}&appid=${openWeatherApiKey}&units=metric&lang=fr`)
+              .then(res => res.json())
+              .then(data => {
+                setQuality(data);
+                localStorage.setItem('quality', JSON.stringify(data));
+                
+              });
+              
+          });
+          setLoading(false);
+      },
+      (err) => {
+        console.error(err);
+        // fallback : fetch météo pour la ville actuelle
+        fetch(`https://api.weatherapi.com/v1/forecast.json?key=f9cc340e26b240188b2195245242805&q=${city}&days=7&aqi=no&alerts=no`)
+          .then(res => res.json())
+          .then(data => setWeatherData(data))
+          
+          .catch(err => console.error(err));
+      }
+    );
+  } else {
+    // Si pas de géoloc : fetch météo pour la ville actuelle
+    fetch(`https://api.weatherapi.com/v1/forecast.json?key=f9cc340e26b240188b2195245242805&q=${city}&days=7&aqi=no&alerts=no`)
+      .then(res => res.json())
+      .then(data => setWeatherData(data))
+      .catch(err => console.error(err));
+  }
+
+  console.log("data refresh !");
+};
+
 
   // 🛑 Écran d’autorisation AVANT l’app
   if (locationAllowed === null) {
@@ -187,7 +247,8 @@ return (
     {/* 🟢 Boutons pour refresh et localisation */}
     <div className="bottom-head" style={view === 'allDay' || view === 'allDayPlus1' || view === 'allDayPlus2'? { marginTop: '2rem' } : { marginTop: '0' }}>
       
-      <button onClick={refreshWeather}>🔄 Refresh</button>
+      <button onClick={refreshWeather} disabled={loading}>
+  {loading ? ' ⏳ Refreshing' : '🔄 Refresh !'}</button>
       <button onClick={askForLocation}>📍 </button>
       <button onClick={() => {
         setManualCity(''); 
