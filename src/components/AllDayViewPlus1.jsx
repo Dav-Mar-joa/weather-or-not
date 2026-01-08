@@ -85,7 +85,7 @@ import React from 'react';
       className="all-day-view"
       style={{
         width: '100%',
-        height: 'calc(100vh - 120px)',
+        height: 'calc(95vh - 120px)',
         overflowY: 'auto',
         padding: '8px',
         boxSizing: 'border-box',
