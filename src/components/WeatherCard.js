@@ -3,8 +3,10 @@ function WeatherCard({ day }) {
     console.log("day :",day);
   return (
     <div className="weather-card">
-        
-      <p>{days}</p>
+      <div >
+        <p style={{fontSize:'1rem', border:'1px solid gray', padding:"8px" ,borderRadius:'8px' }}>{days}</p>
+      </div> 
+      
       <p>{day.day.mintemp_c}°C / {day.day.maxtemp_c}°C</p>
       {/* <p>{day.day.condition.text}</p> */}
       <p>☔ {day.day.daily_chance_of_rain} %</p>
