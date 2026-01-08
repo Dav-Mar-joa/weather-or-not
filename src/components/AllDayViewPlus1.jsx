@@ -172,7 +172,7 @@ import React from 'react';
       
 
       {/* === Graph Température & Pluie === */}
-      <div className="graph-container" style={{ margin: '0 auto 16px', maxWidth: '380px' }}>
+      <div className="graph-container" style={{ margin: '16px auto 16px', maxWidth: '380px' }}>
         <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`}>
           {/* Axe X */}
           <line
@@ -330,53 +330,83 @@ import React from 'react';
         <p>🌬️ Max Wind : {windMax[0]} km/h ({windMaxHour}h) - 🌧️ Max Rain : {rainMax[0]} mm ({rainMaxHour}h)</p>
       </div> */}
 
-        <div style={{ margin: '16px 0', fontSize: '0.85rem' }}>
+        <div style={{ margin: '16px 0px 0 0px', fontSize: '0.85rem' }}>
   <table
     style={{
       width: '100%',
       borderCollapse: 'collapse',
       textAlign: 'center',
       backgroundColor: 'rgba(255,255,255,0.05)',
-      borderRadius: '8px',
+      borderRadius: '12px',
       overflow: 'hidden'
     }}
   >
     <thead style={{ backgroundColor: 'rgba(255,255,255,0.1)' }}>
       <tr>
+        <th style={{ padding: '0px' }}></th>
         <th style={{ padding: '6px' }}>🔥 Temp</th>
         <th style={{ padding: '6px' }}>Feels like</th>
         <th style={{ padding: '6px' }}>🌬️ Wind</th>
         <th style={{ padding: '6px' }}>🌧️ Rain</th>
       </tr>
     </thead>
-    <tbody>
+    {/* <tbody>
       <tr>
         <td style={{ padding: '6px' }}>
-          <br/>
-          Max: {tMax[0]}°C ({tMaxHour}h)<br/>
-          <br/>
-          Min: {tMin[0]}°C ({tMinHour}h)
+          <br/>Min <br/>  
+          <br/><br/>Max <br/>
         </td>
         <td style={{ padding: '6px' }}>
-          <br/>
-          Max: {tMaxFeel[0]}°C ({tMaxFeelHour}h)<br/>
-          <br/>
-          Min: {tMinFeel[0]}°C ({tMinFeelHour}h)
+          <br/>{tMin[0]}°C <br/>({tMinHour}h)  
+          <br/><br/>{tMax[0]}°C <br/>({tMaxHour}h)<br/ styl={{ padding: '6px' }}>
         </td>
         <td style={{ padding: '6px' }}>
-          Max: {windMax[0]} km/h ({windMaxHour}h)
+          <br/>{tMinFeel[0]}°C <br/>({tMinFeelHour}h)
+          <br/><br/>{tMaxFeel[0]}°C <br/>({tMaxFeelHour}h)<br/>
         </td>
         <td style={{ padding: '6px' }}>
-          Max: {rainMax[0]} mm ({rainMaxHour}h)
+           {windMax[0]} km/h <br/>({windMaxHour}h)
+        </td>
+        <td style={{ padding: '6px' }}>
+          {rainMax[0]} mm <br/>({rainMaxHour}h)
         </td>
       </tr>
-    </tbody>
+    </tbody> */}
+  
+  <tbody>
+  <tr>
+    <td style={{ padding: '6px' }}>
+      <br/>Min <br/>  
+      <br/><br/>Max <br/>
+    </td>
+    <td style={{ padding: '6px' }}>
+      <div style={{ borderBottom: '1px solid white', paddingBottom: '16px' }}>
+        <br/>{tMin[0]}°C <br/>({tMinHour}h)  
+      </div>
+      <br/>{tMax[0]}°C <br/>({tMaxHour}h)
+    </td>
+    <td style={{ padding: '6px' }}>
+      <div style={{ borderBottom: '1px solid white', paddingBottom:'16px' }}>
+        <br/>{tMinFeel[0]}°C <br/>({tMinFeelHour}h)
+      </div>
+      <br/>{tMaxFeel[0]}°C <br/>({tMaxFeelHour}h)<br/>
+    </td>
+    <td style={{ padding: '6px' }}>
+       {windMax[0]} km/h <br/><br/>({windMaxHour}h)
+    </td>
+    <td style={{ padding: '6px' }}>
+      {rainMax[0]} mm <br/>({rainMaxHour}h)
+    </td>
+  </tr>
+</tbody>
+
+  
   </table>
 </div>
 
 
 
-      <div style={{ textAlign: 'center', margin: '10px 0' }}>
+      <div style={{ textAlign: 'center', margin: '30px 0' }}>
         <button onClick={() => setShowTable(!showTable)}>
           {showTable ? 'Masquer les données' : 'Afficher les données'}
         </button>
