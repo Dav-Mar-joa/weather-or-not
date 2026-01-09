@@ -211,10 +211,11 @@ body {
 
 .weather-card h2:first-child {
   margin-top: 4rem;
+  font-size: 1rem;
 }
 
 .weather-card p:first-of-type {
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   margin-bottom: 0;
 }
 

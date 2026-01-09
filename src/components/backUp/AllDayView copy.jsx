@@ -1,5 +1,5 @@
 import React from 'react';
-  function AllDayView({ hours,date,dayOffset }) {
+  function AllDayView({ hours,date }) {
 
     const formatDay = (offset = 0) => {
     const d = new Date();
@@ -91,11 +91,9 @@ import React from 'react';
   const rainMax =  [...hours]
     .map(h => h.precip_mm)
     .sort((a, b) => b - a)
-    .slice(0, 2);   
+    .slice(0, 1);   
   
   const rainMaxHour = hours.find(h => h.precip_mm === rainMax[0])?.time.split(' ')[1].slice(0, 2);
-
-  const totalRain = hours.reduce((sum, h) => sum + h.precip_mm, 0).toFixed(2);
 
   // console.log("rainMaxHour :",rainMaxHour);
   // console.log("rainMax :",rainMax);
@@ -168,7 +166,7 @@ import React from 'react';
       }}
     >
       <h2 style={{ textAlign: 'center', marginBottom: '8px', fontSize: '1rem' }}>
-        {getDayLabel(dayOffset)} · {formatDay(dayOffset)}
+        {getDayLabel(0)} · {formatDay(0)}
       </h2>
 
       
@@ -268,15 +266,10 @@ import React from 'react';
           }}
         >
           <span>0h</span>
-          <span>3h</span>
           <span>6h</span>
-          <span>9h</span>
           <span>12h</span>
-          <span>15h</span> 
           <span>18h</span>
-          <span>21h</span>
-          <span>24h</span>     
-
+          <span>24h</span>
         </div>
 
         {/* Légende */}
@@ -288,7 +281,7 @@ import React from 'react';
             fontSize: '0.75rem',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center',marginTop: '10px', }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
             <span
               style={{
                 display: 'inline-block',
@@ -301,7 +294,7 @@ import React from 'react';
             ></span>
             Temp.
           </div>
-          <div style={{ display: 'flex', alignItems: 'center',marginTop: '10px', }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
             <span
                 style={{
                 display: 'inline-block',
@@ -315,7 +308,7 @@ import React from 'react';
             Feels like
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px', }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
             <span
               style={{
                 display: 'inline-block',
@@ -324,9 +317,8 @@ import React from 'react';
                 backgroundColor: '#4FC3F7',
                 marginRight: '4px',
                 borderRadius: '50%',
-
               }}
-            ></span >
+            ></span>
             Rain
           </div>
         </div>
@@ -351,11 +343,11 @@ import React from 'react';
   >
     <thead style={{ backgroundColor: 'rgba(255,255,255,0.1)' }}>
       <tr>
-        {/* <th style={{ padding: '0px' }}></th> */}
-        {/* <th style={{ padding: '6px' }}>🔥 Temp</th> */}
-        <th style={{ padding: '6px' }}>🌡 Feels like</th>
-        <th style={{ padding: '6px' }}>🌬️ Wind max</th>
-        <th style={{ padding: '6px' }}>🌧️ Rain max / day</th>
+        <th style={{ padding: '0px' }}></th>
+        <th style={{ padding: '6px' }}>🔥 Temp</th>
+        <th style={{ padding: '6px' }}>Feels like</th>
+        <th style={{ padding: '6px' }}>🌬️ Wind</th>
+        <th style={{ padding: '6px' }}>🌧️ Rain</th>
       </tr>
     </thead>
     {/* <tbody>
@@ -383,14 +375,14 @@ import React from 'react';
   
   <tbody>
   <tr>
-    {/* <td style={{ padding: '6px' }}>
-      <div style={{ paddingTop:'0px' }}>
+    <td style={{ padding: '6px' }}>
+      <div style={{ paddingTop:'8px' }}>
         Min <br/> 
       </div>
        
       <br/><br/>Max <br/>
-    </td> */}
-    {/* <td style={{ padding: '6px', paddingBottom:'8px' }}>
+    </td>
+    <td style={{ padding: '6px', paddingBottom:'8px' }}>
       <div style={{ borderBottom: '1px solid white', paddingBottom: '16px' }}>
         <div style={{ paddingTop:'8px' }}>
          {tMin[0]}°C <br/>( {tMinHour}h )  
@@ -399,27 +391,26 @@ import React from 'react';
       </div>
       <br/>{tMax[0]}°C <br/>( {tMaxHour}h )
       <br/>
-    </td> */}
+    </td>
     <td style={{ padding: '6px', paddingBottom:'8px' }}>
-      <div style={{ borderBottom: '1px solid white', paddingBottom:'16px'}}>
+      <div style={{ borderBottom: '1px solid white', paddingBottom:'16px' }}>
         <div style={{ paddingTop:'8px' }}>
-          {tMinFeel[0]}°C ( {tMinFeelHour}h )
+          {tMinFeel[0]}°C <br/>( {tMinFeelHour}h )
         </div>
         
-      </div >
-      <div style={{paddingTop:'0px',marginTop:'0px'}}><br/>{tMaxFeel[0]}°C ( {tMaxFeelHour}h )<br/> 
       </div>
-      
+      <br/>{tMaxFeel[0]}°C <br/>( {tMaxFeelHour}h )<br/>
     </td>
     <td style={{ padding: '6px' }}>
        {windMax[0]} km/h <br/><br/>( {windMaxHour}h )
     </td>
     <td style={{ padding: '6px' }}>
-      {rainMax[0]} / {totalRain} mm <br/><br/>( {rainMaxHour}h )
+      {rainMax[0]} mm <br/><br/>( {rainMaxHour}h )
     </td>
   </tr>
 </tbody>
 
+  
   </table>
 </div>
 
@@ -494,7 +485,7 @@ import React from 'react';
                 fontWeight: top3Rain.includes(h.precip_mm) ? 'bold' : 'normal'
               }}
             >
-              {h.precip_mm !== 0 ? `${h.precip_mm.toFixed(2)} mm` : '-'}
+              {h.precip_mm !== 0 ? `${h.precip_mm.toFixed(1)} mm` : '-'}
             </td>
 
             {/* <td style={{ color: getWindColor(h.wind_kph) }}>

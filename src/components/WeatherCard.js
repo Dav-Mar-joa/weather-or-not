@@ -4,7 +4,7 @@ function WeatherCard({ day }) {
   return (
     <div className="weather-card">
       <div >
-        <p style={{fontWeight:"bold"}}>{days}</p>
+        <p style={{fontWeight:"bold",fontSize:"1rem",paddingBottom : "2px",borderBottom: '2px solid white'}}>{days}</p>
       </div> 
       
       <p>{day.day.mintemp_c}°C / {day.day.maxtemp_c}°C</p>

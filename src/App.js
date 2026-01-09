@@ -3,8 +3,8 @@ import CurrentWeather from './components/CurrentWeather';
 import CurrentDay from './components/CurrentDay';
 import Forecast from './components/Forecast';
 import AllDayView from './components/AllDayView';
-import AllDayViewPlus1 from './components/AllDayViewPlus1';
-import AllDayViewPlus2 from './components/AllDayViewPlus2';
+// import AllDayViewPlus1 from './components/backUp/AllDayViewPlus1';
+// import AllDayViewPlus2 from './components/backUp/AllDayViewPlus2';
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
@@ -331,7 +331,8 @@ return (
 
 {view === 'allDay' && (
   <>
-    <AllDayView hours={weatherData.forecast.forecastday[0].hour} date={weatherData.forecast.forecastday[0].date} />
+    <AllDayView hours={weatherData.forecast.forecastday[0].hour} date={weatherData.forecast.forecastday[0].date} 
+    dayOffset={0}/>
 
     <div className="bottom-buttons">
       <button onClick={() => setView('today')}>Resume</button>
@@ -343,8 +344,9 @@ return (
 
 {view === 'allDayPlus1' && (
   <>
-    <AllDayViewPlus1 hours={weatherData.forecast.forecastday[1].hour}
+    <AllDayView hours={weatherData.forecast.forecastday[1].hour}
     date={weatherData.forecast.forecastday[1].date} 
+    dayOffset={1}
     />
 
     <div className="bottom-buttons">
@@ -355,8 +357,9 @@ return (
   </>
 )}{view === 'allDayPlus2' && (
   <>
-    <AllDayViewPlus2 hours={weatherData.forecast.forecastday[2].hour} 
-    date={weatherData.forecast.forecastday[2].date}/>
+    <AllDayView hours={weatherData.forecast.forecastday[2].hour} 
+    date={weatherData.forecast.forecastday[2].date}
+    dayOffset={2}/>
 
     <div className="bottom-buttons">
       <button onClick={() => setView('today')}>Resume</button>
