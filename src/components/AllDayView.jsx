@@ -403,11 +403,11 @@ import React from 'react';
     <td style={{ padding: '6px', paddingBottom:'8px' }}>
       <div style={{ borderBottom: '1px solid white', paddingBottom:'16px'}}>
         <div style={{ paddingTop:'8px' }}>
-          {tMinFeel[0]}°C {tMinFeelHour} h 
+          {tMinFeelHour} h : {tMinFeel[0]}°C 
         </div>
         
       </div >
-      <div style={{paddingTop:'0px',marginTop:'0px'}}><br/>{tMaxFeel[0]}°C  {tMaxFeelHour} h <br/> 
+      <div style={{paddingTop:'0px',marginTop:'0px'}}><br/>{tMaxFeelHour} h : {tMaxFeel[0]}°C  <br/> 
       </div>
       
     </td>
