@@ -98,7 +98,7 @@ body {
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(1rem);
   border-radius: 1.5rem;
-  margin-top: 1.5rem;
+  margin-top: 0.8rem;
   padding: 1rem 0.125rem 0.125rem;
   width: 100%;
   /* max-width: 18.75rem; */
@@ -291,7 +291,7 @@ body {
   border: none;
   background-color: rgb(79, 164, 255); /* bleu pastel */
   color: white;
-  padding: 10px 16px;
+  padding: 6px 16px;
   transition: background-color 0.3s, transform 0.1s;
 }
 
