@@ -190,13 +190,13 @@ body {
 
 .current-weather p:nth-of-type(5) {
   font-size: 0.8rem;
-  margin: 0.625rem 0 0;
+  margin: 0.625rem 0 0.5rem;
   text-transform: capitalize;
 }
 
 /* update */
 .current-weather p:last-of-type {
-  margin-top: 0.625rem;
+  margin: 0rem 0 0;
   font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.6);
 }
@@ -281,6 +281,7 @@ body {
   justify-content: space-around;
   align-items: center; /* centre verticalement */
   gap: 12px; /* espace entre boutons */
+  margin-top: 1.5rem;
   margin-bottom: 0.625rem;
 }
 
