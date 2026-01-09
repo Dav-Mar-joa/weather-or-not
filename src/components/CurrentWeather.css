@@ -330,8 +330,8 @@ body {
 
 
 .city-input-container input {
-  padding: 10px 12px;
-  font-size: 1rem;
+  padding: 5px 6px;
+  font-size: 0.8rem;
   border-radius: 12px;
   border: none;
   outline: none;
@@ -348,8 +348,8 @@ body {
 }
 
 .city-input-container button {
-  padding: 10px 16px;
-  font-size: 1rem;
+  padding: 5px 6px;
+  font-size: 0.8rem;
   border-radius: 12px;
   border: none;
   cursor: pointer;

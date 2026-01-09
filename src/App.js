@@ -296,7 +296,7 @@ return (
         setShowCityInput(false);
       }}
     >
-       ✅   </button>
+      OK   </button>
   </div>
 )}
 
