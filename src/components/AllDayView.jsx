@@ -403,19 +403,19 @@ import React from 'react';
     <td style={{ padding: '6px', paddingBottom:'8px' }}>
       <div style={{ borderBottom: '1px solid white', paddingBottom:'16px'}}>
         <div style={{ paddingTop:'8px' }}>
-          {tMinFeel[0]}°C ( {tMinFeelHour}h )
+          {tMinFeel[0]}°C {tMinFeelHour} h 
         </div>
         
       </div >
-      <div style={{paddingTop:'0px',marginTop:'0px'}}><br/>{tMaxFeel[0]}°C ( {tMaxFeelHour}h )<br/> 
+      <div style={{paddingTop:'0px',marginTop:'0px'}}><br/>{tMaxFeel[0]}°C  {tMaxFeelHour} h <br/> 
       </div>
       
     </td>
     <td style={{ padding: '6px' }}>
-       {windMax[0]} km/h <br/><br/>( {windMaxHour}h )
+       {windMax[0]} km/h <br/><br/> {windMaxHour} h 
     </td>
     <td style={{ padding: '6px' }}>
-      {rainMax[0]} / {totalRain} mm <br/><br/>( {rainMaxHour}h )
+      {rainMax[0]} / {totalRain} mm <br/><br/> {rainMaxHour} h 
     </td>
   </tr>
 </tbody>

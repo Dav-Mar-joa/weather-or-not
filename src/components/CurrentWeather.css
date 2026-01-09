@@ -281,7 +281,7 @@ body {
   justify-content: space-around;
   align-items: center; /* centre verticalement */
   gap: 12px; /* espace entre boutons */
-  margin-top: 1.5rem;
+  margin-top: 2rem;
   margin-bottom: 0.625rem;
 }
 
