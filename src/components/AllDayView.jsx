@@ -111,11 +111,23 @@ import React from 'react';
   // console.log("tMinFeel :",tMinFeel);
 
   const getWindColor = (wind) => {
-    if (top3Wind.includes(wind) && wind > 0) return '#FF4D4D';
+    // if (top3Wind.includes(wind) && wind > 0) return '#FF4D4D';
+    if (wind >= 40) return '#FF4D4D';
     if (wind >= 25) return '#FF8C00';
     if (wind >= 12) return '#FFD700';
+    
     return 'white';
   };
+
+  // 🌡️ Température
+const getTempColor = (temp) => {
+
+  if (temp >= 25) return '#FF8C66'; // très chaud, orange doux
+  if (temp >= 15) return '#FFD580'; // chaud/modéré, jaune pastel
+  if (temp >= 5)  return '#a0ffcfff'; // tempérée/fraîche, bleu pastel
+  if (temp >= 0) return '#80DFFF'; // froid, bleu doux
+  return '#5CB3FF'; // très froid, bleu plus profond
+};
 
   const top3Rain = [...hours]
     .map(h => h.precip_mm)
@@ -456,7 +468,17 @@ import React from 'react';
             <td style={{ padding: '2px', textAlign: 'center' }}>
                 {h.time.split(' ')[1].slice(0, 2)}h
             </td>
-            <td style={{ padding: '4px', textAlign: 'center' }}>{h.temp_c.toFixed(1)}°C</td>
+            {/* <td style={{ padding: '4px', textAlign: 'center' }}>{h.temp_c.toFixed(1)}°C</td> */}
+            <td
+              style={{
+                padding: '4px',
+                textAlign: 'center',
+                color: getTempColor(h.temp_c), // couleur selon la température
+                borderRadius: '4px' // optionnel, coins arrondis
+              }}
+            >
+              {h.temp_c.toFixed(1)}°C
+            </td>
             <td style={{ padding: '4px', textAlign: 'center' }}>{h.feelslike_c.toFixed(1)}°C</td>
             {/* <td style={{ padding: '4px', textAlign: 'center' }}>
                 {h.wind_kph !== 0 ? `${h.wind_kph} km/h` : ''}
