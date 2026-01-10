@@ -40,12 +40,6 @@ import React from 'react';
   const paddingLeft = 40;
   const paddingRight = 40;
 
-    // 🎯 AXE X UNIQUE (IMPORTANT)
-  const getX = (i) =>
-    paddingLeft +
-    (i / (hours.length - 1)) *
-    (width - paddingLeft - paddingRight);
-
   // Points Température
   const pointsTemp = hours.map((h, i) => {
     const x = paddingLeft + (i / (hours.length - 1)) * (width - paddingLeft - paddingRight);
@@ -103,9 +97,6 @@ import React from 'react';
 
   const totalRain = hours.reduce((sum, h) => sum + h.precip_mm, 0).toFixed(2);
 
-  const hourOf = (key, value) =>
-    hours.find(h => h[key] === value)?.time.split(' ')[1].slice(0, 2);
-
   // console.log("rainMaxHour :",rainMaxHour);
   // console.log("rainMax :",rainMax);
   // console.log("tMinHour :",tMinHour);
@@ -143,15 +134,18 @@ const getTempColor = (temp) => {
     .sort((a, b) => b - a)
     .slice(0, 3);
 
-  const pointsFeels = hours.map((h, i) => [
-    getX(i),
-    height - ((h.feelslike_c - tempsMin) / (tempsMax - tempsMin)) * height
-  ]);
+  const pointsFeels = hours.map((h, i) => {
+    const x = paddingLeft + (i / (hours.length - 1)) * (width - paddingLeft - paddingRight);
+    const y = height - ((h.feelslike_c - tempsMin) / (tempsMax - tempsMin)) * height;
+    return [x, y];
+ });
 
-  const pointsPluie = hours.map((h, i) => [
-    getX(i),
-    height - (h.precip_mm / pluieMax) * height
-  ]);
+  // Points Pluie
+  const pointsPluie = hours.map((h, i) => {
+    const x = paddingLeft + (i / (hours.length - 1)) * (width - paddingLeft - paddingRight);
+    const y = height - (h.precip_mm / pluieMax) * height;
+    return [x, y];
+  });
 
   // Génère une ligne SVG à partir des points
   const line = points =>
@@ -173,18 +167,6 @@ const getTempColor = (temp) => {
     yPluieLabels.push([y, val.toFixed(1)]);
   }
 
-  const now =new Date()
-  const currentHour = now.getHours();
-  console.log("currentHour :",currentHour);
-
-  const currentIndex = hours.findIndex(
-  h => Number(h.time.split(' ')[1].slice(0, 2)) === currentHour
-);
-
-  const safeIndex = currentIndex !== -1 ? currentIndex : null;
-  const currentX = safeIndex !== null ? getX(safeIndex) : null;
-
-
   return (
     <div
       className="all-day-view"
@@ -195,7 +177,6 @@ const getTempColor = (temp) => {
         padding: '8px',
         boxSizing: 'border-box',
         color: 'white',
-        
       }}
     >
       <h2 style={{ textAlign: 'center', marginBottom: '8px', fontSize: '1rem' }}>
@@ -205,53 +186,176 @@ const getTempColor = (temp) => {
       
 
       {/* === Graph Température & Pluie === */}
-      {/* ===== GRAPH ===== */}
-      <div style={{ margin: '16px auto', maxWidth: '380px' }}>
+      <div className="graph-container" style={{ margin: '16px auto 16px', maxWidth: '380px' }}>
         <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`}>
+          {/* Axe X */}
+          <line
+            x1={paddingLeft}
+            y1={height}
+            x2={width - paddingRight}
+            y2={height}
+            stroke="#888"
+            strokeWidth="1"
+          />
 
-          <line x1={paddingLeft} y1={height} x2={width - paddingRight} y2={height} stroke="#888" />
-
-          {currentX && dayOffset === 0 && (
-            <line
-              x1={currentX}
-              y1={0}
-              x2={currentX}
-              y2={height}
-              stroke="#00FF88"
-              strokeWidth="1.5"
-              strokeDasharray="4 4"
-              opacity="0.8"
-            />
-          )}
-
+          {/* Température rouge */}
           <path d={line(pointsTemp)} fill="none" stroke="#FF6B6B" strokeWidth="2" />
-          {pointsTemp.map((p, i) => <circle key={i} cx={p[0]} cy={p[1]} r="3" fill="#FF6B6B" />)}
+          {pointsTemp.map((p, i) => (
+            <circle key={i} cx={p[0]} cy={p[1]} r="3" fill="#FF6B6B" />
+          ))}
 
+          {/* Pluie bleu */}
           <path d={line(pointsPluie)} fill="none" stroke="#4FC3F7" strokeWidth="2" />
-          {pointsPluie.map((p, i) => <circle key={i} cx={p[0]} cy={p[1]} r="3" fill="#4FC3F7" />)}
+          {pointsPluie.map((p, i) => (
+            <circle key={i} cx={p[0]} cy={p[1]} r="3" fill="#4FC3F7" />
+          ))}
 
-          {pointsFeels.map((p, i) => <circle key={i} cx={p[0]} cy={p[1]} r="1.5" fill="#f14545" />)}
+          {/* Température ressentie */}
+          {/* <path d={line(pointsFeels)} fill="none"
+          stroke="#FFD166" strokeWidth="2"
+          strokeDasharray="4 4"
+         /> */}
 
-          {yTempsLabels.map(([y, v], i) => <text key={i} x={0} y={y + 4} fontSize="10" fill="#FF6B6B">{v}°C</text>)}
-          {yPluieLabels.map(([y, v], i) => <text key={i} x={width - paddingRight + 6} y={y + 4} fontSize="10" fill="#4FC3F7">{v} mm</text>)}
+        {pointsFeels.map((p, i) => (
+        <circle key={`feels-${i}`} cx={p[0]} cy={p[1]} r="1.5" fill="#f14545ff" />
+        ))}
+ 
 
-        </svg>
+          {/* Y Température gauche */}
+          {yTempsLabels.map(([y, val], i) => (
+            <text key={i} x={0} y={y + 4} fontSize="10" fill="#FF6B6B">
+              {val}°C
+            </text>
+          ))}
 
-        {/* 🕒 AXE TEMPS ALIGNÉ */}
-        <div style={{ position: 'relative', height: '16px', fontSize: '0.7rem'}}>
-          {hours.map((h, i) => {
-            const hour = Number(h.time.split(' ')[1].slice(0, 2));
-            if (![0, 6, 12, 18, 23].includes(hour)) return null;
+          {/* Y Pluie droite */}
+          {yPluieLabels.map(([y, val], i) => (
+            <g key={i}>
+              {/* petite ligne de graduation */}
+              <line
+                x1={width - paddingRight - 3}
+                y1={y}
+                x2={width - paddingRight + 3}
+                y2={y}
+                stroke="#4FC3F7"
+                strokeWidth="1"
+              />
+              {/* label en mm */}
+              <text
+                x={width - paddingRight + 6}
+                y={y + 4}
+                fontSize="10"
+                fill="#4FC3F7"
+              >
+                {val} mm
+              </text>
+            </g>
+          ))}
+
+          {/* Lignes de grille horizontales */}
+          {[...Array(5)].map((_, i) => {
+            const y = height - (i / 4) * height;
             return (
-              <span key={i} style={{ position: 'absolute', left: getX(i) - 8 }}>
-                {hour}h
-              </span>
+              <line
+                key={i}
+                x1={paddingLeft}
+                y1={y}
+                x2={width - paddingRight}
+                y2={y}
+                stroke="rgba(255,255,255,0.1)"
+                strokeWidth="1"
+              />
             );
           })}
+        </svg>
+
+        {/* Axe X labels */}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            fontSize: '0.7rem',
+            color: 'white',
+            marginTop: '4px',
+            // marginLeft :"2rem",
+            // marginRight: "2rem"
+          }}
+        >
+          <span>0h</span>
+          {/* <span>3h</span> */}
+          <span>6h</span>
+          {/* <span>9h</span> */}
+          <span>12h</span>
+          {/* <span>15h</span>  */}
+          <span>18h</span>
+          {/* <span>21h</span> */}
+          <span>24h</span>     
+
+        </div>
+
+        {/* Légende */}
+        {/* <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-around',
+            marginTop: '8px',
+            fontSize: '0.75rem',
+          }}
+        > */}
+
+         {/* Légende */}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-around',
+            marginTop: '8px',
+            fontSize: '0.75rem',
+          }}
+        >
+
+          <div style={{ display: 'flex', alignItems: 'center',marginTop: '10px', }}>
+            <span
+              style={{
+                display: 'inline-block',
+                width: '12px',
+                height: '12px',
+                backgroundColor: '#FF6B6B',
+                marginRight: '4px',
+                borderRadius: '50%',
+              }}
+            ></span>
+            Temp.
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center',marginTop: '10px', }}>
+            <span
+                style={{
+                display: 'inline-block',
+                width: '12px',
+                height: '12px',
+                border: '2px dashed #ea2929ff',
+                marginRight: '4px',
+                borderRadius: '50%',
+                }}
+            ></span>
+            Feels like
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px', }}>
+            <span
+              style={{
+                display: 'inline-block',
+                width: '12px',
+                height: '12px',
+                backgroundColor: '#4FC3F7',
+                marginRight: '4px',
+                borderRadius: '50%',
+
+              }}
+            ></span >
+            Rain
+          </div>
         </div>
       </div>
-
-      
 
       {/* <div style={{ marginBottom: '16px', fontSize: '0.8rem' }}   >
         <p>🔥 Max Temp : {tMax[0]}°C ({tMaxHour}h) - ❄️ Min Temp : {tMin[0]}°C ({tMinHour}h)</p>
