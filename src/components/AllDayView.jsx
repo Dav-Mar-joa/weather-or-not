@@ -277,6 +277,8 @@ const getTempColor = (temp) => {
             fontSize: '0.7rem',
             color: 'white',
             marginTop: '4px',
+            marginLeft :"2rem",
+            marginRight: "2rem"
           }}
         >
           <span>0h</span>
@@ -292,6 +294,16 @@ const getTempColor = (temp) => {
         </div>
 
         {/* Légende */}
+        {/* <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-around',
+            marginTop: '8px',
+            fontSize: '0.75rem',
+          }}
+        > */}
+
+         {/* Légende */}
         <div
           style={{
             display: 'flex',
@@ -300,6 +312,7 @@ const getTempColor = (temp) => {
             fontSize: '0.75rem',
           }}
         >
+
           <div style={{ display: 'flex', alignItems: 'center',marginTop: '10px', }}>
             <span
               style={{
@@ -415,11 +428,11 @@ const getTempColor = (temp) => {
     <td style={{ padding: '6px', paddingBottom:'8px' }}>
       <div style={{ borderBottom: '1px solid white', paddingBottom:'16px'}}>
         <div style={{ paddingTop:'8px' }}>
-          {tMinFeelHour} h : {tMinFeel[0]}°C 
+        {tMinFeelHour} h - Min : {tMinFeel[0]}°C
         </div>
         
       </div >
-      <div style={{paddingTop:'0px',marginTop:'0px'}}><br/>{tMaxFeelHour} h : {tMaxFeel[0]}°C  <br/> 
+      <div style={{paddingTop:'0px',marginTop:'0px'}}><br/>{tMaxFeelHour} h - Max : {tMaxFeel[0]}°C<br/> 
       </div>
       
     </td>
