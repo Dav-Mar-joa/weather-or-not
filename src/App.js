@@ -312,7 +312,8 @@ function App() {
 
 return (
   <div>
-    {/* 🟢 Boutons pour refresh et localisation */}
+    <div className="top-bar">
+      {/* 🟢 Boutons pour refresh et localisation */}
     <div className="bottom-head" style={view === 'allDay' || view === 'allDayPlus1' || view === 'allDayPlus2'? { marginTop: '2rem' } : { marginTop: '0' }}>
       
       <button onClick={refreshWeather} disabled={loading}>
@@ -323,30 +324,9 @@ return (
         setShowCityInput(prev=>!prev);}
         }>✏️ Where ?</button>
     </div>
-
-    {/* {showCityInput && (
-  <div style={{ marginTop: '10px' }}>
-    <input
-      type="text"
-      placeholder="Entrez une ville"
-      value={manualCity}
-      onChange={(e) => setManualCity(e.target.value)}
-      style={{ padding: '4px', marginRight: '4px' }}
-    />
-    <button
-      onClick={() => {
-        if (!manualCity.trim()) return;
-        setCity(manualCity.trim());
-        localStorage.setItem('city', manualCity.trim());
-        setLocationAllowed('false'); // pas de géoloc
-        setShowCityInput(false); // cache le champ après validation
-      }}
-    >
-      Valider
-    </button>
-  </div>
-)} */}
-
+    </div>
+    
+  
   {showCityInput && (
   <div className="city-input-container">
     <input
@@ -371,22 +351,31 @@ return (
           console.error(err);
           setCitySuggestions([]);
         }
-        {citySuggestions.length > 0 && (
-      <div className="city-suggestions">
-        {citySuggestions.map((c, idx) => (
-          <div
-            key={idx}
-            className={`city-suggestion ${c.name === selectedCity?.name ? 'selected' : ''}`}
-            onClick={() => setSelectedCity(c)}
-          >
-            {c.name} ({c.region}) - {c.country}
-          </div>
-        ))}
-      </div>
-    )}
       }}  
       
     />
+    {citySuggestions.length > 0 && (
+  <div className="city-suggestions">
+    {citySuggestions.map((c, idx) => (
+      <div
+        key={idx}
+        className="city-suggestion"
+        onClick={() => {
+          setManualCity(c.name);
+          setCity(c.name);
+          localStorage.setItem('city', c.name);
+          setLocationAllowed('false');
+          setShowCityInput(false);
+          setCitySuggestions([]);
+        }}
+      >
+        {c.name} ({c.region}) – {c.country}
+      </div>
+    ))}
+  </div>
+)}
+
+
     {/* <button
       onClick={() => {
         if (!manualCity.trim()) return;
@@ -508,7 +497,7 @@ console.log("geoData from postal code lookup :",geoData);
 
 
   </div>
-)}
+  )}
 
     {/* 🛑 RENDER CONDITIONNEL SELON LA VUE */}
     {view === 'today' && (

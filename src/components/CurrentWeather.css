@@ -168,7 +168,7 @@ body {
 }
 
 .current-weather h4 {
-  margin: 0.5rem 0 0.25rem 0;
+  margin: 0.5rem 0 0rem 0;
   font-size: 0.9rem;
   font-weight: 400;
   letter-spacing: 0.03125rem;
@@ -185,7 +185,7 @@ body {
 .current-weather p:nth-of-type(1) {
   font-size: 1.2rem;
   font-weight: 700;
-  margin: 0.625rem 0;
+  margin: 0.625rem 0 0;
   color: rgb(147, 243, 198);
 }
 
@@ -201,6 +201,10 @@ body {
   font-size: 0.8rem;
   margin: 0.625rem 0;
   /* text-transform: capitalize; */
+}
+
+.current-weather p:nth-of-type(4) {
+  margin-bottom: 0rem;
 }
 
 .current-weather p:nth-of-type(5) {
@@ -258,8 +262,8 @@ body {
 }
 
 .bottom-buttons button {
-  padding: 0.625rem 0.8rem;
-  font-size: 1rem;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.8rem;
   font-weight: bold;
   cursor: pointer;
   border-radius: 1.5rem;
@@ -298,6 +302,7 @@ body {
   gap: 12px; /* espace entre boutons */
   margin-top: 2rem;
   margin-bottom: 0.625rem;
+  
 }
 
 .bottom-head button {
@@ -340,6 +345,7 @@ body {
   justify-content: center;
   gap: 8px;
   flex-wrap: wrap;
+  
 }
 
 
@@ -376,6 +382,25 @@ body {
 .city-input-container button:hover {
   background-color: #3c5dcc;
 }
+
+.city-suggestion {
+  white-space: normal;
+  /* word-break: keep-all; */
+  overflow-wrap: break-word;
+  font-size: 0.75rem;
+  color: #ffffffcc;
+  margin-top: 4px; 
+  cursor: pointer; 
+
+}
+
+.top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+}
+
 
 
 .graph-container {

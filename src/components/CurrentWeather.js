@@ -65,10 +65,10 @@ function CurrentWeather({ current, location, quality, departement, postalCode })
     <div className="current-weather">
       <h2>{hour} - {location.name} ({postalCode})</h2>
       <h4>Dept : {departement}</h4>
-      <p>🌡 Temp : {current.temp_c}°C</p>
-      <p>Feels like : {current.feelslike_c}°C</p>
+      <p>🌡 Temp : {current.temp_c}°C </p>
+      <p>Feels like : {current.feelslike_c}°C - Humidity : {current.humidity}%</p>
       <p>Wind : {current.wind_kph} km/h</p>
-      <p>Humidity : {current.humidity}%</p>
+      
       {/* <p>UV : {current.uv} / 12</p> */}
 
       {/* AQI avec badge coloré */}
