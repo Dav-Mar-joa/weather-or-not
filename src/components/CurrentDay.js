@@ -7,7 +7,7 @@ function CurrentWeather({ current, location ,astro}) {
 
   const date = current.last_updated.split(" ")[[0]];
   const hour =current.last_updated.split(" ")[[1]];
-  console.log("data : ",current);
+  // console.log("data : ",current);
 
   return (
     <div className="current-weather-infos">

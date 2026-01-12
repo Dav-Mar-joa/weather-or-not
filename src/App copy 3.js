@@ -12,13 +12,10 @@ function App() {
 
   const [postalCode, setPostalCode] = useState(null);
   const [departement, setDepartement] = useState(null);
-  const [selectedCity, setSelectedCity] = useState(null);
 
   const [city, setCity] = useState(
     () => localStorage.getItem('city')
   );
-
-  const [citySuggestions, setCitySuggestions] = useState([]);
 
    const [quality, setQuality] = useState(
     () => localStorage.getItem('quality')
@@ -32,7 +29,6 @@ function App() {
 
   const [showCityInput, setShowCityInput] = useState(false); // affiche le champ
   const [manualCity, setManualCity] = useState(''); // ce que l'utilisateur tape
-  
 
   // 📍 Demande de localisation (une seule fois)
   const askForLocation = () => {
@@ -52,33 +48,12 @@ function App() {
         )
           .then(res => res.json())
           .then(data => {
-            
             const detectedCity = data.city || data.locality;
-
-            const postal = data.postcode
-              || data.localityInfo?.informative?.find(i => i.description === "postcode")?.name;
-
-            const dept = data.localityInfo?.administrative?.find(a =>
-              a.adminLevel === 6 || a.description?.includes("department")
-            )?.name;
-            console.log("postal---3333--- :",postal)
-
             if (detectedCity) {
               setCity(detectedCity);
               localStorage.setItem('city', detectedCity);
             }
-
-            if (postal) {
-              setPostalCode(postal);
-              localStorage.setItem('postalCode', postal);
-            }
-
-            if (dept) {
-              setDepartement(dept);
-              localStorage.setItem('departement', dept);
-            }
           });
-          
 
         setLocationAllowed('true');
         localStorage.setItem('locationAllowed', 'true');
@@ -106,30 +81,29 @@ function App() {
         )
           .then(res => res.json())
           .then(data => {
-           const detectedCity = data.city || data.locality;
+            const detectedCity = data.city || data.locality;
 
-          const postal = data.postcode
-            || data.localityInfo?.informative?.find(i => i.description === "postcode")?.name;
+            const postal = data.postcode
+              || data.localityInfo?.informative?.find(i => i.description === "postcode")?.name;
 
-          const dept = data.localityInfo?.administrative?.find(a =>
-            a.adminLevel === 6 || a.description?.includes("department")
-          )?.name;
-          console.log("postal---2222--- :",postal)
+            const dept = data.localityInfo?.administrative?.find(a =>
+              a.adminLevel === 6 || a.description?.includes("department")
+            )?.name;
 
-          if (detectedCity) {
-            setCity(detectedCity);
-            localStorage.setItem('city', detectedCity);
-          }
+            if (detectedCity) {
+              setCity(detectedCity);
+              localStorage.setItem('city', detectedCity);
+            }
 
-          if (postal) {
-            setPostalCode(postal);
-            localStorage.setItem('postalCode', postal);
-          }
+            if (postal) {
+              setPostalCode(postal);
+              localStorage.setItem('postalCode', postal);
+            }
 
-          if (dept) {
-            setDepartement(dept);
-            localStorage.setItem('departement', dept);
-          } 
+            if (dept) {
+              setDepartement(dept);
+              localStorage.setItem('departement', dept);
+            }
           });
 
             
@@ -190,28 +164,27 @@ function App() {
           .then(data => {
             const detectedCity = data.city || data.locality;
 
-            const postal = data.postcode
-              || data.localityInfo?.informative?.find(i => i.description === "postcode")?.name;
+  const postal = data.postcode
+    || data.localityInfo?.informative?.find(i => i.description === "postcode")?.name;
 
-            const dept = data.localityInfo?.administrative?.find(a =>
-              a.adminLevel === 6 || a.description?.includes("department")
-            )?.name;
-            console.log("postal---2222--- :",postal)
+  const dept = data.localityInfo?.administrative?.find(a =>
+    a.adminLevel === 6 || a.description?.includes("department")
+  )?.name;
 
-            if (detectedCity) {
-              setCity(detectedCity);
-              localStorage.setItem('city', detectedCity);
-            }
+  if (detectedCity) {
+    setCity(detectedCity);
+    localStorage.setItem('city', detectedCity);
+  }
 
-            if (postal) {
-              setPostalCode(postal);
-              localStorage.setItem('postalCode', postal);
-            }
+  if (postal) {
+    setPostalCode(postal);
+    localStorage.setItem('postalCode', postal);
+  }
 
-            if (dept) {
-              setDepartement(dept);
-              localStorage.setItem('departement', dept);
-            }
+  if (dept) {
+    setDepartement(dept);
+    localStorage.setItem('departement', dept);
+  }
 
             // ⚡ On fetch la météo **immédiatement** pour la ville détectée
             fetch(`https://api.weatherapi.com/v1/forecast.json?key=f9cc340e26b240188b2195245242805&q=${detectedCity}&days=7&aqi=no&alerts=no`)
@@ -252,7 +225,6 @@ function App() {
 
   console.log("data refresh !");
 };
-
 
   // 🛑 Écran d’autorisation AVANT l’app
   if (locationAllowed === null) {
@@ -353,160 +325,54 @@ return (
       type="text"
       placeholder="Entrez une ville"
       value={manualCity}
-      onChange={async (e) => {
-        setManualCity(e.target.value);
-        if (!e.target.value.trim()) {
-          setCitySuggestions([]);
-          return;
-        }
-
-        try {
-          // 🔹 Recherche toutes les villes correspondantes
-          const res = await fetch(
-            `https://api.weatherapi.com/v1/search.json?key=f9cc340e26b240188b2195245242805&q=${encodeURIComponent(e.target.value.trim())}`
-          );
-          const results = await res.json();
-          setCitySuggestions(results || []);
-        } catch (err) {
-          console.error(err);
-          setCitySuggestions([]);
-        }
-        {citySuggestions.length > 0 && (
-      <div className="city-suggestions">
-        {citySuggestions.map((c, idx) => (
-          <div
-            key={idx}
-            className={`city-suggestion ${c.name === selectedCity?.name ? 'selected' : ''}`}
-            onClick={() => setSelectedCity(c)}
-          >
-            {c.name} ({c.region}) - {c.country}
-          </div>
-        ))}
-      </div>
-    )}
-      }}  
-      
+      onChange={(e) => setManualCity(e.target.value)}
     />
-    {/* <button
-      onClick={() => {
-        if (!manualCity.trim()) return;
-        setCity(manualCity.trim());
-        localStorage.setItem('city', manualCity.trim());
-        setLocationAllowed('false'); // désactive géoloc
-        setShowCityInput(false);
-      }}
-    >
-      OK   </button> */}
-
-      {/* <button
-      onClick={async () => {
-        if (!manualCity.trim()) return;
-
-        const cityName = manualCity.trim();
-        setCity(cityName);
-        localStorage.setItem('city', cityName);
-        setLocationAllowed('false'); // désactive géoloc
-        setShowCityInput(false);
-
-        try {
-          // 🔹 1️⃣ Récupère latitude/longitude depuis WeatherAPI
-          const resWeather = await fetch(
-            `https://api.weatherapi.com/v1/current.json?key=f9cc340e26b240188b2195245242805&q=${encodeURIComponent(cityName)}`
-          );
-          const weatherData = await resWeather.json();
-          const { lat, lon } = weatherData.location;
-
-          // 🔹 2️⃣ Reverse geocode pour code postal et département
-          const resGeo = await fetch(
-            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=fr`
-          );
-          const geoData = await resGeo.json();
-
-          const postal = geoData.postcode
-            || geoData.localityInfo?.informative?.find(i =>
-                i.description?.toLowerCase().includes("postcode") ||
-                i.description?.toLowerCase().includes("code postal")
-              )?.name;
-
-          const dept = geoData.localityInfo?.administrative?.find(a => a.adminLevel === 6)?.name;
-
-          if (postal) {
-            setPostalCode(postal);
-            localStorage.setItem('postalCode', postal);
-          }
-
-          if (dept) {
-            setDepartement(dept);
-            localStorage.setItem('departement', dept);
-          }
-
-          console.log("Ville manuelle :", cityName, "Postal :", postal, "Dept :", dept);
-
-        } catch (err) {
-          console.error("Erreur récupération code postal/département :", err);
-        }
-      }}
-    >
-      OK
-    </button> */}
     <button
-  onClick={async () => {
-    if (!manualCity.trim()) return;
+      onClick={async() => {
+        if (!manualCity.trim()) return;
 
-    let cityName = manualCity.trim();
-    const isPostalCode = /^\d{5}$/.test(cityName);
-    console.log("isPostalCode :", isPostalCode);
-    console.log('cityName : ',cityName)
-
-    if (isPostalCode) {
-  try {
-    const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?postalcode=${cityName}&country=FR&format=json`);
-const geoData = await geoRes.json();
-console.log("geoData from postal code lookup :",geoData);
-    console.log("geoRes : ",geoData[0]?.display_name.split(',')[2].trim());
-    cityName = geoData[0]?.display_name.split(',')[2].trim(); // Extrait la ville du résultat
-    console.log("cityName after lookup :", cityName);
-  } catch (err) {
-    console.error("Erreur lookup code postal :", err);
-  }
-}
-
-    // 🔹 Update city
+    const cityName = manualCity.trim();
     setCity(cityName);
     localStorage.setItem('city', cityName);
-    setLocationAllowed('false'); 
+    setLocationAllowed('false');
     setShowCityInput(false);
 
-    // 🔹 Fetch météo
     try {
-      const resWeather = await fetch(`https://api.weatherapi.com/v1/current.json?key=f9cc340e26b240188b2195245242805&q=${encodeURIComponent(cityName)}`);
-      const weatherData = await resWeather.json();
-      const { lat, lon } = weatherData.location;
+      // 🔎 fetch infos depuis BigDataCloud avec le nom de la ville
+      const res = await fetch(`https://api.bigdatacloud.net/data/geocode-client?city=${encodeURIComponent(cityName)}&localityLanguage=fr`);
+      const data = await res.json();
 
-      // 🔹 Reverse geocode pour code postal & dept
-      const resGeo = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=fr`);
-      const geoData = await resGeo.json();
+      const postal = data.postcode
+        || data.localityInfo?.informative?.find(i => i.description === "postcode")?.name;
 
-      const postal = geoData.postcode
-        || geoData.localityInfo?.informative?.find(i =>
-            i.description?.toLowerCase().includes("postcode") ||
-            i.description?.toLowerCase().includes("code postal")
-          )?.name;
+      const dept = data.localityInfo?.administrative?.find(a =>
+        a.adminLevel === 6 || a.description?.includes("department")
+      )?.name;
 
-      const dept = geoData.localityInfo?.administrative?.find(a => a.adminLevel === 6)?.name;
+      if (postal) {
+        setPostalCode(postal);
+        localStorage.setItem('postalCode', postal);
+      } else {
+        setPostalCode(null);
+        localStorage.removeItem('postalCode');
+      }
 
-      if (postal) setPostalCode(postal);
-      if (dept) setDepartement(dept);
+      if (dept) {
+        setDepartement(dept);
+        localStorage.setItem('departement', dept);
+      } else {
+        setDepartement(null);
+        localStorage.removeItem('departement');
+      }
 
     } catch (err) {
-      console.error("Erreur récupération météo/code postal :", err);
+      console.error("Erreur fetch ville manuelle :", err);
+      setPostalCode(null);
+      setDepartement(null);
     }
-  }}
->
-  OK
-</button>
-
-
+      }}
+    >
+      OK   </button>
   </div>
 )}
 

@@ -27,7 +27,7 @@ import './CurrentWeather.css';
 //   );
 // }
 
-function CurrentWeather({ current, location, quality }) {
+function CurrentWeather({ current, location, quality, departement, postalCode }) {
   if (!current) return null;
 
   const date = current.last_updated.split(" ")[0];
@@ -36,7 +36,7 @@ function CurrentWeather({ current, location, quality }) {
   // 🟢 Récupération de l'indice AQI
   const aqi = quality && quality.list && quality.list[0]?.main?.aqi;
 
-  console.log("AQI value :", aqi);
+  // console.log("AQI value :", aqi);
   const aqiOverFive = parseFloat (5 -aqi); // Inverser l'échelle pour correspondre à 5 (meilleur) à 1 (pire)
 
   // 🔴 Définir la couleur et le label
@@ -63,7 +63,8 @@ function CurrentWeather({ current, location, quality }) {
 
   return (
     <div className="current-weather">
-      <h2>{hour} - {location.name} ({location.country})</h2>
+      <h2>{hour} - {location.name} ({postalCode})</h2>
+      <h4>Dept : {departement}</h4>
       <p>🌡 Temp : {current.temp_c}°C</p>
       <p>Feels like : {current.feelslike_c}°C</p>
       <p>Wind : {current.wind_kph} km/h</p>

@@ -175,7 +175,7 @@ const getTempColor = (temp) => {
 
   const now =new Date()
   const currentHour = now.getHours();
-  console.log("currentHour :",currentHour);
+  // console.log("currentHour :",currentHour);
 
   const currentIndex = hours.findIndex(
   h => Number(h.time.split(' ')[1].slice(0, 2)) === currentHour
@@ -248,6 +248,59 @@ const getTempColor = (temp) => {
               </span>
             );
           })}
+        </div>
+                 {/* Légende */}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-around',
+            marginTop: '2px',
+            fontSize: '0.75rem',
+            
+          }}
+        >
+
+          <div style={{ display: 'flex', alignItems: 'center',marginTop: '10px', }}>
+            <span
+              style={{
+                display: 'inline-block',
+                width: '8px',
+                height: '8px',
+                backgroundColor: '#FF6B6B',
+                marginRight: '8px',
+                borderRadius: '50%',
+              }}
+            ></span>
+            Temp.
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center',marginTop: '10px', }}>
+            <span
+                style={{
+                display: 'inline-block',
+                width: '8px',
+                height: '8px',
+                border: '2px solid #ea2929ff',
+                marginRight: '8px',
+                borderRadius: '50%',
+                }}
+            ></span>
+            Feels like
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px', }}>
+            <span
+              style={{
+                display: 'inline-block',
+                width: '8px',
+                height: '8px',
+                backgroundColor: '#4FC3F7',
+                marginRight: '8px',
+                borderRadius: '50%',
+
+              }}
+            ></span >
+            Rain
+          </div>
         </div>
       </div>
 

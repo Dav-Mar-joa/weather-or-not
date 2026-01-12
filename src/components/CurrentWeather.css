@@ -8,9 +8,10 @@ body {
   font-family: "Inter", "Segoe UI", system-ui, sans-serif;
   background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
   height: 100vh;
-  width: 100vw;
+  width: 90vw;
   overflow: hidden;
-
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -154,10 +155,24 @@ body {
 
 /* ville */
 .current-weather h2 {
-  margin: 0;
+  margin-top: 0;
+  margin-bottom: 0.25rem;
   font-size: 1.1rem;
   font-weight: 600;
   letter-spacing: 0.03125rem;
+   white-space: normal;   /* permet le retour à la ligne automatique */
+  word-wrap: break-word; /* permet de couper seulement si le mot est très long, sinon ne coupe pas */
+  overflow-wrap: anywhere;
+  padding: 4px 8px;
+
+}
+
+.current-weather h4 {
+  margin: 0.5rem 0 0.25rem 0;
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0.03125rem;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 /* date / heure */
