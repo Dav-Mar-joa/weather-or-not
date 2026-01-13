@@ -101,8 +101,48 @@ function App() {
         setLocationAllowed('false');
         localStorage.setItem('locationAllowed', 'false');
       }
+      
     );
+ 
   };
+
+  const updatePostalDeptForCity = async (cityName) => {
+  let postal = null;
+  let dept = null;
+
+  try {
+    // 1️⃣ GeoData via bigdatacloud
+    const resGeo = await fetch(
+      `https://api.bigdatacloud.net/data/reverse-geocode-client?locality=${encodeURIComponent(cityName)}&localityLanguage=fr`
+    );
+    const geoData = await resGeo.json();
+
+    postal = geoData.postcode
+      || geoData.localityInfo?.informative?.find(i => i.description?.toLowerCase().includes("postcode") || i.description?.toLowerCase().includes("code postal"))?.name;
+
+    dept = geoData.localityInfo?.administrative?.find(a => a.adminLevel === 6)?.name;
+
+    // 2️⃣ Fallback si ville FR mais pas de postal
+    if (!postal) {
+      const vicopoRes = await fetch(`https://vicopo.selfbuild.fr/cherche/${encodeURIComponent(cityName)}`);
+      const vicopoData = await vicopoRes.json();
+      if (vicopoData.cities?.length > 0) postal = vicopoData.cities[0].code;
+    }
+
+    setPostalCode(postal);
+    setDepartement(dept);
+    if (postal) localStorage.setItem('postalCode', postal);
+    if (dept) localStorage.setItem('departement', dept);
+
+  } catch (err) {
+    console.error("Erreur updatePostalDeptForCity :", err);
+    setPostalCode(null);
+    setDepartement(null);
+    localStorage.removeItem('postalCode');
+    localStorage.removeItem('departement');
+  }
+};
+
 
   // 🔁 Mise à jour auto de la ville au refresh si autorisé
   useEffect(() => {
@@ -244,6 +284,7 @@ useEffect(() => {
 
   const refreshWeather = () => {
   if (!city) return;
+  
   setLoading(true);
 
   // Si la géoloc est activée, on récupère la ville actuelle

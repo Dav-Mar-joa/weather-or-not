@@ -63,12 +63,12 @@ function CurrentWeather({ current, location, quality, departement, postalCode, c
 
   return (
     <div className="current-weather">
-      <h2>{hour} -  {location.name} {postalCode ? `(${postalCode})` : ''}</h2>
+      <h2>  {location.name} {postalCode ? `( ${postalCode} )` : ''}</h2>
       {/* <h4>Dept : {departement} ({country})</h4> */}
       <h4>
         {departement 
-          ? `Dept : ${departement} (${country})`
-          : `Country : ${country}`}
+          ? ` ${departement} (${country})`
+          : ` ${country}`}
       </h4>
       <p>🌡 Temp : {current.temp_c}°C </p>
       <p>Feels like : {current.feelslike_c}°C - Humidity : {current.humidity}%</p>
