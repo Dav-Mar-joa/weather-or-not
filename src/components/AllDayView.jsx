@@ -312,7 +312,7 @@ const getTempColor = (temp) => {
         <p>🌬️ Max Wind : {windMax[0]} km/h ({windMaxHour}h) - 🌧️ Max Rain : {rainMax[0]} mm ({rainMaxHour}h)</p>
       </div> */}
 
-        <div style={{ margin: '16px 0px 0 0px', fontSize: '0.85rem' }}>
+        <div style={{ margin: '16px 0px 0 0px', fontSize: '0.8rem' }}>
   <table
     style={{
       width: '100%',

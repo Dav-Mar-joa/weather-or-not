@@ -33,13 +33,7 @@ function App() {
 
   const [showCityInput, setShowCityInput] = useState(false); // affiche le champ
   const [manualCity, setManualCity] = useState(''); // ce que l'utilisateur tape
-
-  const resetFrenchGeoData = () => {
-  setPostalCode(null);
-  setDepartement(null);
-  localStorage.removeItem('postalCode');
-  localStorage.removeItem('departement');
-};
+  
 
   // 📍 Demande de localisation (une seule fois)
   const askForLocation = () => {
@@ -620,8 +614,6 @@ const geoData = await geoRes.json();
 
       const dept = geoData.localityInfo?.administrative?.find(a => a.adminLevel === 6)?.name;
       const country = weatherData.location.country
-
-      
       // console.log("country 514 : ",country)
       // console.log("department 515 :",dept)
       if (postal) setPostalCode(postal);

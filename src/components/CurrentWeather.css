@@ -132,13 +132,13 @@ body {
 }
 
 .condition img {
-  margin-top: 0.4rem;
-  width: 3rem;
-  height: 3rem;
+  margin-top: 0.2rem;
+  width: 2.7rem;
+  height: 2.7rem;
 }
 
 .condition-infos p {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   margin: 0;
   margin-top: 0.3125rem;
   color: aliceblue;
@@ -192,7 +192,7 @@ body {
 
 /* ressenti */
 .current-weather p:nth-of-type(2) {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   color: rgba(255, 255, 255, 0.85);
   margin: 0.625rem 0;
 }
@@ -200,14 +200,14 @@ body {
 /* descriptions météo */
 .current-weather p:nth-of-type(3),
 .current-weather p:nth-of-type(4) {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   margin: 0.625rem 0;
   /* text-transform: capitalize; */
 }
 
 .current-weather p:nth-of-type(4) {
   margin-bottom: 0rem;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
 }
 
 .current-weather p:nth-of-type(5) {
@@ -269,7 +269,7 @@ body {
 
 .bottom-buttons button {
   padding: 0.5rem 0.8rem;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: bold;
   cursor: pointer;
   border-radius: 1.5rem;
