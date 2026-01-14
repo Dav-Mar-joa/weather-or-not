@@ -1,5 +1,5 @@
 import React from 'react';
-  function AllDayView({ hours,date,dayOffset }) {
+  function AllDayView({ hours,date,dayOffset,location }) {
 
     const formatDay = (offset = 0) => {
     const d = new Date();
@@ -200,6 +200,7 @@ const getTempColor = (temp) => {
     >
       <h2 style={{ textAlign: 'center', marginBottom: '8px', fontSize: '1rem' }}>
         {getDayLabel(dayOffset)} · {formatDay(dayOffset)}
+        <br/> {location.name} 
       </h2>
 
       
@@ -375,8 +376,8 @@ const getTempColor = (temp) => {
       <br/>
     </td> */}
     <td style={{ padding: '6px', paddingBottom:'8px' }}>
-      <div style={{ borderBottom: '1px solid white', paddingBottom:'16px'}}>
-        <div style={{ paddingTop:'8px' }}>
+      <div style={{ borderBottom: '1px solid white', paddingBottom:'8px'}}>
+        <div style={{ paddingTop:'6px' }}>
         {tMinFeelHour} h - Min : {tMinFeel[0]}°C
         </div>
         

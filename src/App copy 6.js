@@ -15,11 +15,6 @@ function App() {
   const [country,setCountry]=useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
 
-  const [geoCity, setGeoCity] = useState(
-  () => localStorage.getItem('geoCity')
-);
-
-
   const [city, setCity] = useState(
     () => localStorage.getItem('city')
   );
@@ -39,54 +34,12 @@ function App() {
   const [showCityInput, setShowCityInput] = useState(false); // affiche le champ
   const [manualCity, setManualCity] = useState(''); // ce que l'utilisateur tape
 
-  const [savedCities, setSavedCities] = useState(() => {
-    const stored = localStorage.getItem('savedCities');
-    return stored ? JSON.parse(stored) : [];
-  });
-  const [currentSavedIndex, setCurrentSavedIndex] = useState(0);
-
   const resetFrenchGeoData = () => {
   setPostalCode(null);
   setDepartement(null);
   localStorage.removeItem('postalCode');
   localStorage.removeItem('departement');
 };
-
-  const prevCity = () => {
-    if (savedCities.length === 0) return;
-    setCurrentSavedIndex(prev => (prev > 0 ? prev - 1 : savedCities.length - 1));
-    setCity(savedCities[currentSavedIndex > 0 ? currentSavedIndex - 1 : savedCities.length - 1]);
-  };
-
-  const nextCity = () => {
-    if (savedCities.length === 0) return;
-    setCurrentSavedIndex(prev => (prev < savedCities.length - 1 ? prev + 1 : 0));
-    setCity(savedCities[currentSavedIndex < savedCities.length - 1 ? currentSavedIndex + 1 : 0]);
-  };
-
-const saveCurrentCity = () => {
-    if (!city) return;
-    if (!savedCities.includes(city)) {
-      const newSaved = [...savedCities, city];
-      setSavedCities(newSaved);
-      localStorage.setItem('savedCities', JSON.stringify(newSaved));
-      setCurrentSavedIndex(newSaved.length - 1);
-    }
-  };
-
-  const removeCurrentCity = () => {
-    const filtered = savedCities.filter(c => c !== city);
-    setSavedCities(filtered);
-    localStorage.setItem('savedCities', JSON.stringify(filtered));
-
-    // Revenir sur la ville géolocalisée ou la première dispo
-    if (geoCity) {
-      setCity(geoCity);
-    } else if (filtered.length > 0) {
-      setCity(filtered[0]);
-    }
-  };
-
 
   // 📍 Demande de localisation (une seule fois)
   const askForLocation = () => {
@@ -126,9 +79,7 @@ const saveCurrentCity = () => {
 
             if (detectedCity) {
               setCity(detectedCity);
-              setGeoCity(detectedCity);
               localStorage.setItem('city', detectedCity);
-              localStorage.setItem('geoCity', detectedCity);
             }
 
             // if (country) {
@@ -489,27 +440,12 @@ return (
     <div className="bottom-head" style={view === 'allDay' || view === 'allDayPlus1' || view === 'allDayPlus2'? { marginTop: '2rem' } : { marginTop: '0' }}>
       
       <button onClick={refreshWeather} disabled={loading}>
-  {loading ? ' ⏳ ' : ' 🔁 '}</button>
+  {loading ? ' ⏳ Refreshing' : '🔄 Refresh !'}</button>
       <button onClick={askForLocation}>📍 </button>
       <button onClick={() => {
         setManualCity(''); 
         setShowCityInput(prev=>!prev);}
-        }> 🖊️ </button>
-        {/* 💾 OU ❌ selon la ville */}
-
-          <button onClick={saveCurrentCity} title="Sauvegarder cette ville">
-            💾
-          </button>
-
-
-        {city !== geoCity && (
-          <button onClick={removeCurrentCity} title="Supprimer cette ville">
-            ❌
-          </button>
-        )}
-        <button onClick={prevCity}> ◀️ </button>
-        <button onClick={nextCity}> ▶️ </button> 
-
+        }>✏️ Where ?</button>
     </div>
     </div>
     
@@ -739,8 +675,7 @@ const geoData = await geoRes.json();
 {view === 'allDay' && (
   <>
     <AllDayView hours={weatherData.forecast.forecastday[0].hour} date={weatherData.forecast.forecastday[0].date} 
-    dayOffset={0}
-    location={weatherData.location}/>
+    dayOffset={0}/>
 
     <div className="bottom-buttons">
       <button onClick={() => setView('today')}>Resume</button>
@@ -754,7 +689,7 @@ const geoData = await geoRes.json();
   <>
     <AllDayView hours={weatherData.forecast.forecastday[1].hour}
     date={weatherData.forecast.forecastday[1].date} 
-    dayOffset={1} location={weatherData.location}
+    dayOffset={1}
     />
 
     <div className="bottom-buttons">
@@ -767,7 +702,7 @@ const geoData = await geoRes.json();
   <>
     <AllDayView hours={weatherData.forecast.forecastday[2].hour} 
     date={weatherData.forecast.forecastday[2].date}
-    dayOffset={2} location={weatherData.location}/>
+    dayOffset={2}/>
 
     <div className="bottom-buttons">
       <button onClick={() => setView('today')}>Resume</button>
