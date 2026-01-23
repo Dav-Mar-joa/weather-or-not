@@ -46,9 +46,9 @@ function App() {
   const [currentSavedIndex, setCurrentSavedIndex] = useState(0);
 
   const resetFrenchGeoData = () => {
-  // setPostalCode(null);
+  setPostalCode(null);
   setDepartement(null);
-  // localStorage.removeItem('postalCode');
+  localStorage.removeItem('postalCode');
   localStorage.removeItem('departement');
 };
 
@@ -185,27 +185,17 @@ const saveCurrentCity = () => {
       if (vicopoData.cities?.length > 0) postal = vicopoData.cities[0].code;
     }
 
-    // setPostalCode(postal);
-    // setDepartement(dept);
-    // if (postal) localStorage.setItem('postalCode', postal);
-    // if (dept) localStorage.setItem('departement', dept);
-
-    if (postal) {
-      setPostalCode(postal);
-      localStorage.setItem('postalCode', postal);
-    }
-
-    if (dept) {
-      setDepartement(dept);
-      localStorage.setItem('departement', dept);
-    }
+    setPostalCode(postal);
+    setDepartement(dept);
+    if (postal) localStorage.setItem('postalCode', postal);
+    if (dept) localStorage.setItem('departement', dept);
 
   } catch (err) {
     console.error("Erreur updatePostalDeptForCity :", err);
     setPostalCode(null);
     setDepartement(null);
-    // localStorage.removeItem('postalCode');
-    // localStorage.removeItem('departement');
+    localStorage.removeItem('postalCode');
+    localStorage.removeItem('departement');
   }
 };
 
@@ -260,7 +250,8 @@ const saveCurrentCity = () => {
             localStorage.setItem('departement', dept);
           } 
           });
-   
+
+            
         fetch(`https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=${latitude}&lon=${longitude}&appid=${openWeatherApiKey}&units=metric&lang=fr`)
         .then(res => res.json())
         .then(data => {
@@ -274,6 +265,34 @@ const saveCurrentCity = () => {
     console.log("location validated !") ;
   }, []);
 
+  // 🌦️ Récupération météo
+//   useEffect(() => {
+//     if (!city) return;
+
+//     fetch(
+//       `https://api.weatherapi.com/v1/forecast.json?key=f9cc340e26b240188b2195245242805&q=${city}&days=7&aqi=no&alerts=no`
+//     )
+//       .then(res => res.json())
+//       // .then(data => setWeatherData(data))
+//       .then(data => {
+//   setWeatherData(data);
+
+//   const countryName = data.location.country;
+//   const countryCode = data.location.country_code;
+
+//   setCountry(countryName);
+//   localStorage.setItem('country', countryName);
+
+//   // Nettoyage si hors France
+//   if (countryCode !== 'FR') {
+//     setPostalCode(null);
+//     setDepartement(null);
+//   }
+// })
+
+//       .catch(err => console.error(err));
+//   }, [city]);
+
 useEffect(() => {
   console.log("useEffect for city called");
   if (!city) return;
@@ -282,135 +301,42 @@ useEffect(() => {
        `https://api.weatherapi.com/v1/forecast.json?key=f9cc340e26b240188b2195245242805&q=${city}&days=7&aqi=no&alerts=no`
      )
     .then(res => res.json())
-    .then(async data => {
+    .then(data => {
       setWeatherData(data);
 
       const countryName = data.location.country;
       const countryCode = data.location.country_code;
-      console.log("countryCode :",countryCode)
-      console.log("countryName :",countryName)
-      console.log("--------------------------------------------------")
-      console.log("--------------------------------------------------")
-      console.log("data : ",data)
-      console.log("--------------------------------------------------")
-      console.log("--------------------------------------------------")
     
 
       setCountry(countryName);
       localStorage.setItem('country', countryName);
 
-      // if (countryCode !== 'FR') {
-      //   setPostalCode(null);
-      //   setDepartement(null);
-      //   localStorage.removeItem('postalCode');
-      //   localStorage.removeItem('departement');
-      // }
-      if (countryName === 'France') {
-        // 🔁 recalcul postal + département
-        const { lat, lon } = data.location;
-        console.log("lat : ",lat)
-        console.log("lon : ",lon)
-
-        const resGeo = await fetch(
-          `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=fr`
-        );
-        const geoData = await resGeo.json();
-
-        const postal =
-          geoData.postcode ||
-          geoData.localityInfo?.informative?.find(i =>
-            i.description?.toLowerCase().includes("code postal")
-          )?.name;
-
-          console.log("postal fr : ", postal)
-
-        const dept =
-          geoData.localityInfo?.administrative?.find(a => a.adminLevel === 6)?.name;
-
-        // setPostalCode(postal || null);
-        // setDepartement(dept || null);
-        if (postal) {
-          setPostalCode(postal);
-          localStorage.setItem('postalCode', postal);
-        }
-
-        if (dept) {
-          setDepartement(dept);
-          localStorage.setItem('departement', dept);
-        }
-
-        // if (postal) localStorage.setItem('postalCode', postal);
-        // if (dept) localStorage.setItem('departement', dept);
-      } 
-      else {
-        const { lat, lon } = data.location;
-        console.log("lat : ",lat)
-        console.log("lon : ",lon)
-
-        const resGeo = await fetch(
-          `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=fr`
-        );
-        const geoData = await resGeo.json();
-        console.log("geoData for non-FR country :",geoData)
-
-        const postal =
-          geoData.postcode ||
-          geoData.localityInfo?.informative?.find(i =>
-            i.description?.toLowerCase().includes("code postal")
-          )?.name;
-
-        // const dept =
-        //   geoData.localityInfo?.administrative?.find(a => a.adminLevel === 8)?.name;
-
-        console.log("postal non-FR : ", postal)
-
-        // setPostalCode(postal || null);
-        // setDepartement(dept || null);
-        if (postal ) {
-          setPostalCode(postal);
-          localStorage.setItem('postalCode', postal);
-          const principalSub = geoData.principalSubdivisionCode + " - "+ geoData.principalSubdivision ;
-          console.log("principalSub :",principalSub)
-          // setPostalCode(null);
-          // localStorage.removeItem('postalCode');
-          // setPostalCode(null);
-          setDepartement(principalSub);
-          // localStorage.removeItem('postalCode');
-          localStorage.setItem('departement', principalSub);
-          // resetFrenchGeoData();
-        }
-        else{
-          const principalSub = geoData.principalSubdivisionCode + " - "+ geoData.principalSubdivision ;
-          console.log("principalSub :",principalSub)
-          setPostalCode(null);
-          localStorage.removeItem('postalCode');
-          // setPostalCode(null);
-          setDepartement(principalSub);
-          // localStorage.removeItem('postalCode');
-          localStorage.setItem('departement', principalSub);
-        }
-        // if ( postal ==="") {
-        //   setDepartement(null);
-        //   setPostalCode(null);
-        //   localStorage.removeItem('departement');
-        //   // setPostalCode(postal);
-        //   // localStorage.setItem('postalCode', postal);
-        // }
-
-        // if (dept) {
-        //   setDepartement(dept);
-        //   localStorage.setItem('departement', dept);
-        // }
-
-        // if (dept) {
-        //   setDepartement(dept);
-        //   localStorage.setItem('departement', dept);
-        // }
-        // Pas en France : reset des données françaises
-        // resetFrenchGeoData();
+      if (countryCode !== 'FR') {
+        setPostalCode(null);
+        setDepartement(null);
+        localStorage.removeItem('postalCode');
+        localStorage.removeItem('departement');
       }
     });
 }, [city]);
+
+
+  // 🔄 Bouton refresh
+  // const refreshWeather = () => {
+  //   if (!city) return;
+
+  //   if (locationAllowed === 'true') {
+  //     askForLocation(); // remet à jour la ville si on a bougé
+  //   } else {
+  //     fetch(
+  //       `https://api.weatherapi.com/v1/forecast.json?key=f9cc340e26b240188b2195245242805&q=${city}&days=7&aqi=no&alerts=no`
+  //     )
+  //       .then(res => res.json())
+  //       .then(data => setWeatherData(data));
+        
+  //   }
+  //   console.log("data refresh !") ;
+  // };
 
   const refreshWeather = () => {
   if (!city) return;
@@ -530,6 +456,33 @@ useEffect(() => {
 
   if (!weatherData) return <p>Chargement...</p>;
 
+  // return (
+  //   <div>
+  //     <div className="bottom-head">
+  //       <button onClick={refreshWeather}>🔄 Refresh</button>
+  //       <button onClick={askForLocation}>📍 Locate</button>
+  //     </div>
+
+  //     <CurrentWeather
+  //       current={weatherData.current}
+  //       location={weatherData.location}
+  //     />
+
+  //     <CurrentDay
+  //       current={weatherData.current}
+  //       location={weatherData.location}
+  //       astro={weatherData.forecast.forecastday[0].astro}
+  //     />
+
+  //     <Forecast forecast={weatherData.forecast.forecastday} />
+
+  //     <div className="bottom-buttons">
+  //       <button onClick={() => setView('today')}>Today</button>
+  //       <button onClick={() => setView('allDay')}>All day</button>
+  //     </div>
+  //   </div>
+  // );
+
 return (
   <div>
     <div className="top-bar">
@@ -611,6 +564,70 @@ return (
     ))}
   </div>
 )}
+
+
+    {/* <button
+      onClick={() => {
+        if (!manualCity.trim()) return;
+        setCity(manualCity.trim());
+        localStorage.setItem('city', manualCity.trim());
+        setLocationAllowed('false'); // désactive géoloc
+        setShowCityInput(false);
+      }}
+    >
+      OK   </button> */}
+
+      {/* <button
+      onClick={async () => {
+        if (!manualCity.trim()) return;
+
+        const cityName = manualCity.trim();
+        setCity(cityName);
+        localStorage.setItem('city', cityName);
+        setLocationAllowed('false'); // désactive géoloc
+        setShowCityInput(false);
+
+        try {
+          // 🔹 1️⃣ Récupère latitude/longitude depuis WeatherAPI
+          const resWeather = await fetch(
+            `https://api.weatherapi.com/v1/current.json?key=f9cc340e26b240188b2195245242805&q=${encodeURIComponent(cityName)}`
+          );
+          const weatherData = await resWeather.json();
+          const { lat, lon } = weatherData.location;
+
+          // 🔹 2️⃣ Reverse geocode pour code postal et département
+          const resGeo = await fetch(
+            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=fr`
+          );
+          const geoData = await resGeo.json();
+
+          const postal = geoData.postcode
+            || geoData.localityInfo?.informative?.find(i =>
+                i.description?.toLowerCase().includes("postcode") ||
+                i.description?.toLowerCase().includes("code postal")
+              )?.name;
+
+          const dept = geoData.localityInfo?.administrative?.find(a => a.adminLevel === 6)?.name;
+
+          if (postal) {
+            setPostalCode(postal);
+            localStorage.setItem('postalCode', postal);
+          }
+
+          if (dept) {
+            setDepartement(dept);
+            localStorage.setItem('departement', dept);
+          }
+
+          console.log("Ville manuelle :", cityName, "Postal :", postal, "Dept :", dept);
+
+        } catch (err) {
+          console.error("Erreur récupération code postal/département :", err);
+        }
+      }}
+    >
+      OK
+    </button> */}
     <button
   onClick={async () => {
     if (!manualCity.trim()) return;
@@ -657,8 +674,6 @@ const geoData = await geoRes.json();
             i.description?.toLowerCase().includes("code postal")
           )?.name;
 
-      console.log("postal after bigdatacloud :", postal);    
-
       if (!postal) {
       // fallback vers Vicopo pour la France
       const vicopoRes = await fetch(`https://vicopo.selfbuild.fr/cherche/${encodeURIComponent(cityName)}`);
@@ -668,16 +683,16 @@ const geoData = await geoRes.json();
       }
     }    
 
-      const dept = geoData.localityInfo?.administrative?.find(a => a.adminLevel ===6 )?.name;
+      const dept = geoData.localityInfo?.administrative?.find(a => a.adminLevel === 6)?.name;
       const country = weatherData.location.country
 
       
-      console.log("country 514 : ",country)
-      console.log("department 515 :",dept)
+      // console.log("country 514 : ",country)
+      // console.log("department 515 :",dept)
       if (postal) setPostalCode(postal);
-      localStorage.setItem('postalCode', postal);
+      localStorage.setItem('postalCode', postal || "");
       if (dept) setDepartement(dept);
-      localStorage.setItem('departement', dept);
+      localStorage.setItem('departement', dept || "");
       if (country) setCountry(country);
 
     } catch (err) {
@@ -764,8 +779,15 @@ const geoData = await geoRes.json();
     </div>
   </>
 )}
+ 
+
+
   </div>
 );
+
+
 }
+
+
 
 export default App;
