@@ -26,7 +26,7 @@ function App() {
 
   const [citySuggestions, setCitySuggestions] = useState([]);
 
-   const [quality, setQuality] = useState(
+  const [quality, setQuality] = useState(
     () => localStorage.getItem('quality')
   );
 
@@ -86,6 +86,12 @@ const saveCurrentCity = () => {
       setCity(filtered[0]);
     }
   };
+
+  useEffect(() => {
+  if (!city && localStorage.getItem('city')) {
+    setCity(localStorage.getItem('city'));
+    }
+  }, []);
 
 
   // 📍 Demande de localisation (une seule fois)
@@ -529,6 +535,21 @@ useEffect(() => {
   }
 
   if (!weatherData) return <p>Chargement...</p>;
+
+  if (
+  !weatherData ||
+  !weatherData.location ||
+  !weatherData.current ||
+  !weatherData.forecast ||
+  !weatherData.forecast.forecastday
+  ) {
+    return (
+      <div className="loading-screen">
+        <p>⏳ Chargement des données météo…</p>
+      </div>
+    );
+  }
+
 
 return (
   <div>
