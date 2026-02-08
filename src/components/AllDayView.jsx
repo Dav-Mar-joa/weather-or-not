@@ -242,7 +242,7 @@ const getTempColor = (temp) => {
         <div style={{ position: 'relative', height: '16px', fontSize: '0.7rem'}}>
           {hours.map((h, i) => {
             const hour = Number(h.time.split(' ')[1].slice(0, 2));
-            if (![0, 6, 12, 18, 23].includes(hour)) return null;
+            if (![0, 6, 12, 18, 24].includes(hour)) return null;
             return (
               // <span key={i} style={{ position: 'absolute', left: getX(i) - 8 }}>
               //   {hour}h
