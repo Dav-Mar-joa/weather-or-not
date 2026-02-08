@@ -192,12 +192,23 @@ const getTempColor = (temp) => {
     yPluieLabels.push([y, val.toFixed(1)]);
   }
 
-  const now =new Date()
-  const currentHour = now.getHours();
-  // console.log("currentHour :",currentHour);
+  // const now =new Date()
+  // const currentHour = now.getHours();
+  // // console.log("currentHour :",currentHour);
+
+  // ✅ Heure locale exacte de la ville
+const localTime = new Date(location.localtime_epoch * 1000);
+let timezoneOffset = location.localtime.split(' ')[1]
+console.log("location.localtime 1  :",location.localtime);
+timezoneOffset = timezoneOffset.split(':')[0].replace(':', '' ).trim();
+console.log("timezoneOffset 2:",timezoneOffset);
+const currentHour = localTime.getHours();
+
+console.log("localTime :",localTime);
+console.log("currentHour :",currentHour);
 
   const currentIndex = hours.findIndex(
-  h => Number(h.time.split(' ')[1].slice(0, 2)) === currentHour
+  h => Number(h.time.split(' ')[1].slice(0, 2)) === Number(timezoneOffset)
 );
 
   const safeIndex = currentIndex !== -1 ? currentIndex : null;
