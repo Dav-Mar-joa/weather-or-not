@@ -199,13 +199,10 @@ const getTempColor = (temp) => {
   // ✅ Heure locale exacte de la ville
 const localTime = new Date(location.localtime_epoch * 1000);
 let timezoneOffset = location.localtime.split(' ')[1]
-console.log("location.localtime 1  :",location.localtime);
-timezoneOffset = timezoneOffset.split(':')[0].replace(':', '' ).trim();
-console.log("timezoneOffset 2:",timezoneOffset);
-const currentHour = localTime.getHours();
 
-console.log("localTime :",localTime);
-console.log("currentHour :",currentHour);
+timezoneOffset = timezoneOffset.split(':')[0].replace(':', '' ).trim();
+
+const currentHour = localTime.getHours();
 
   const currentIndex = hours.findIndex(
   h => Number(h.time.split(' ')[1].slice(0, 2)) === Number(timezoneOffset)
