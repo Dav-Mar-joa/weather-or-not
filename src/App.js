@@ -64,7 +64,7 @@ function App() {
     setCity(savedCities[currentSavedIndex < savedCities.length - 1 ? currentSavedIndex + 1 : 0]);
   };
 
-const saveCurrentCity = () => {
+  const saveCurrentCity = () => {
     if (!city) return;
     if (!savedCities.includes(city)) {
       const newSaved = [...savedCities, city];

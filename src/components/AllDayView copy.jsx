@@ -244,18 +244,7 @@ const getTempColor = (temp) => {
             const hour = Number(h.time.split(' ')[1].slice(0, 2));
             if (![0, 6, 12, 18, 23].includes(hour)) return null;
             return (
-              // <span key={i} style={{ position: 'absolute', left: getX(i) - 8 }}>
-              //   {hour}h
-              // </span>
-              <span
-                key={i}
-                style={{
-                  position: 'absolute',
-                  left: getX(i),
-                  transform: 'translateX(-50%)',
-                  whiteSpace: 'nowrap'
-                }}
-              >
+              <span key={i} style={{ position: 'absolute', left: getX(i) - 8 }}>
                 {hour}h
               </span>
             );
@@ -324,52 +313,90 @@ const getTempColor = (temp) => {
         <p>🌬️ Max Wind : {windMax[0]} km/h ({windMaxHour}h) - 🌧️ Max Rain : {rainMax[0]} mm ({rainMaxHour}h)</p>
       </div> */}
 
-        <div style={{ margin: '16px 0px 0 0px', fontSize: '0.7rem' }}>
-          <table
-            style={{
-              width: '100%',
-              borderCollapse: 'collapse',
-              textAlign: 'center',
-              backgroundColor: 'rgba(255,255,255,0.05)',
-              borderRadius: '12px',
-              overflow: 'hidden'
-            }}
-          >
-            <thead style={{ backgroundColor: 'rgba(255,255,255,0.1)' }}>
-              <tr>
-                {/* <th style={{ padding: '0px' }}></th> */}
-                {/* <th style={{ padding: '6px' }}>🔥 Temp</th> */}
-                <th style={{ padding: '6px' }}>🌡 Feels like</th>
-                <th style={{ padding: '6px' }}>🌬️ Wind max</th>
-                <th style={{ padding: '6px' }}>🌧️ Rain max / Day</th>
-              </tr>
-            </thead>
-          
-          <tbody>
-          <tr>
-
-            <td style={{ padding: '6px', paddingBottom:'8px' }}>
-              <div style={{ borderBottom: '1px solid white', paddingBottom:'8px'}}>
-                <div style={{ paddingTop:'6px' }}>
-                {tMinFeelHour} h - Min : {tMinFeel[0]}°C
-                </div>
-                
-              </div >
-              <div style={{paddingTop:'0px',marginTop:'0px'}}><br/>{tMaxFeelHour} h - Max : {tMaxFeel[0]}°C<br/> 
-              </div>
-              
-            </td>
-            <td style={{ padding: '6px' }}>
-              {windMax[0]} km/h <br/><br/> {windMaxHour} h 
-            </td>
-            <td style={{ padding: '6px' }}>
-              {rainMax[0]} / {totalRain} mm <br/><br/> {rainMaxHour} h 
-            </td>
-          </tr>
-        </tbody>
-
-          </table>
+        <div style={{ margin: '16px 0px 0 0px', fontSize: '0.8rem' }}>
+  <table
+    style={{
+      width: '100%',
+      borderCollapse: 'collapse',
+      textAlign: 'center',
+      backgroundColor: 'rgba(255,255,255,0.05)',
+      borderRadius: '12px',
+      overflow: 'hidden'
+    }}
+  >
+    <thead style={{ backgroundColor: 'rgba(255,255,255,0.1)' }}>
+      <tr>
+        {/* <th style={{ padding: '0px' }}></th> */}
+        {/* <th style={{ padding: '6px' }}>🔥 Temp</th> */}
+        <th style={{ padding: '6px' }}>🌡 Feels like</th>
+        <th style={{ padding: '6px' }}>🌬️ Wind max</th>
+        <th style={{ padding: '6px' }}>🌧️ Rain max / day</th>
+      </tr>
+    </thead>
+    {/* <tbody>
+      <tr>
+        <td style={{ padding: '6px' }}>
+          <br/>Min <br/>  
+          <br/><br/>Max <br/>
+        </td>
+        <td style={{ padding: '6px' }}>
+          <br/>{tMin[0]}°C <br/>({tMinHour}h)  
+          <br/><br/>{tMax[0]}°C <br/>({tMaxHour}h)<br/ styl={{ padding: '6px' }}>
+        </td>
+        <td style={{ padding: '6px' }}>
+          <br/>{tMinFeel[0]}°C <br/>({tMinFeelHour}h)
+          <br/><br/>{tMaxFeel[0]}°C <br/>({tMaxFeelHour}h)<br/>
+        </td>
+        <td style={{ padding: '6px' }}>
+           {windMax[0]} km/h <br/>({windMaxHour}h)
+        </td>
+        <td style={{ padding: '6px' }}>
+          {rainMax[0]} mm <br/>({rainMaxHour}h)
+        </td>
+      </tr>
+    </tbody> */}
+  
+  <tbody>
+  <tr>
+    {/* <td style={{ padding: '6px' }}>
+      <div style={{ paddingTop:'0px' }}>
+        Min <br/> 
+      </div>
+       
+      <br/><br/>Max <br/>
+    </td> */}
+    {/* <td style={{ padding: '6px', paddingBottom:'8px' }}>
+      <div style={{ borderBottom: '1px solid white', paddingBottom: '16px' }}>
+        <div style={{ paddingTop:'8px' }}>
+         {tMin[0]}°C <br/>( {tMinHour}h )  
         </div>
+         
+      </div>
+      <br/>{tMax[0]}°C <br/>( {tMaxHour}h )
+      <br/>
+    </td> */}
+    <td style={{ padding: '6px', paddingBottom:'8px' }}>
+      <div style={{ borderBottom: '1px solid white', paddingBottom:'8px'}}>
+        <div style={{ paddingTop:'6px' }}>
+        {tMinFeelHour} h - Min : {tMinFeel[0]}°C
+        </div>
+        
+      </div >
+      <div style={{paddingTop:'0px',marginTop:'0px'}}><br/>{tMaxFeelHour} h - Max : {tMaxFeel[0]}°C<br/> 
+      </div>
+      
+    </td>
+    <td style={{ padding: '6px' }}>
+       {windMax[0]} km/h <br/><br/> {windMaxHour} h 
+    </td>
+    <td style={{ padding: '6px' }}>
+      {rainMax[0]} / {totalRain} mm <br/><br/> {rainMaxHour} h 
+    </td>
+  </tr>
+</tbody>
+
+  </table>
+</div>
 
 
 
