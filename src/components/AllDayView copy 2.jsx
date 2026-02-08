@@ -51,26 +51,16 @@ import React from 'react';
     Number(hours[i].time.split(' ')[1].slice(0, 2))
   );
 
-  const innerWidth = width - paddingLeft - paddingRight;
-
-  const getXFromHour = (hour) => {
-  const x =
-    paddingLeft + (hour / 23) * innerWidth;
-
-  // 🔒 Clamp de sécurité (Samsung fix)
-  return Math.min(
-    paddingLeft + innerWidth - 1,
-    Math.max(paddingLeft + 1, x)
-  );
-};
+  const getXFromHour = (hour) =>
+  paddingLeft +
+  (hour / 23) * (width - paddingLeft - paddingRight);
 
   // Points Température
-const pointsTemp = hours.map((h, i) => [
-  getX(i),
-  height -
-    ((h.temp_c - tempsMin) / (tempsMax - tempsMin)) * height
-]);
-
+  const pointsTemp = hours.map((h, i) => {
+    const x = paddingLeft + (i / (hours.length - 1)) * (width - paddingLeft - paddingRight);
+    const y = height - ((h.temp_c - tempsMin) / (tempsMax - tempsMin)) * height;
+    return [x, y];
+  });
 
   // 🔥 Top 3 valeurs MAX
   const top3Wind = [...hours]
