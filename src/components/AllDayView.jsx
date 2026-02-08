@@ -41,10 +41,19 @@ import React from 'react';
   const paddingRight = 40;
 
     // 🎯 AXE X UNIQUE (IMPORTANT)
+  // const getX = (i) =>
+  //   paddingLeft +
+  //   (i / (hours.length - 1)) *
+  //   (width - paddingLeft - paddingRight);
+
   const getX = (i) =>
-    paddingLeft +
-    (i / (hours.length - 1)) *
-    (width - paddingLeft - paddingRight);
+  getXFromHour(
+    Number(hours[i].time.split(' ')[1].slice(0, 2))
+  );
+
+  const getXFromHour = (hour) =>
+  paddingLeft +
+  (hour / 23) * (width - paddingLeft - paddingRight);
 
   // Points Température
   const pointsTemp = hours.map((h, i) => {
@@ -183,6 +192,7 @@ const getTempColor = (temp) => {
 
   const safeIndex = currentIndex !== -1 ? currentIndex : null;
   const currentX = safeIndex !== null ? getX(safeIndex) : null;
+  
 
 
   return (
@@ -239,28 +249,23 @@ const getTempColor = (temp) => {
         </svg>
 
         {/* 🕒 AXE TEMPS ALIGNÉ */}
-        <div style={{ position: 'relative', height: '16px', fontSize: '0.7rem'}}>
-          {hours.map((h, i) => {
-            const hour = Number(h.time.split(' ')[1].slice(0, 2));
-            if (![0, 6, 12, 18, 24].includes(hour)) return null;
-            return (
-              // <span key={i} style={{ position: 'absolute', left: getX(i) - 8 }}>
-              //   {hour}h
-              // </span>
+        <div style={{ position: 'relative', height: '1rem', fontSize: '0.7rem' }}>
+            {[0, 6, 12, 18, 23].map(hour => (
               <span
-                key={i}
+                key={hour}
                 style={{
                   position: 'absolute',
-                  left: getX(i),
+                  left: getXFromHour(hour),
                   transform: 'translateX(-50%)',
-                  whiteSpace: 'nowrap'
+                  whiteSpace: 'nowrap',
+                  fontVariantNumeric: 'tabular-nums'
                 }}
               >
                 {hour}h
               </span>
-            );
-          })}
-        </div>
+            ))}
+          </div>
+
                  {/* Légende */}
         <div
           style={{
