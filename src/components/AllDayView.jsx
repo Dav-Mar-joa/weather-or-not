@@ -60,7 +60,7 @@ import React from 'react';
   // const width = 350;
   const height = 120;
   const paddingLeft = 60;
-  const paddingRight = 40;
+  const paddingRight = 60;
 
     // 🎯 AXE X UNIQUE (IMPORTANT)
   // const getX = (i) =>
@@ -257,8 +257,20 @@ const currentHour = localTime.getHours();
 
       {/* === Graph Température & Pluie === */}
       {/* ===== GRAPH ===== */}
-      <div style={{ margin: '16px auto', maxWidth: '380px' }} ref={containerRef}>
+      <div style={{ margin: '16px auto', maxWidth: '350px' }} ref={containerRef}>
         <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`}>
+
+          {yTempsLabels.map(([y, v], i) => (
+            <line 
+              key={`grid-${i}`}
+              x1={paddingLeft} 
+              y1={y} 
+              x2={width - paddingRight} 
+              y2={y} 
+              stroke="rgba(255, 255, 255, 0.3)" 
+              strokeWidth="0.5"
+            />
+          ))}
 
           <line x1={paddingLeft} y1={height} x2={width - paddingRight} y2={height} stroke="#888" />
 
@@ -284,32 +296,44 @@ const currentHour = localTime.getHours();
           {pointsFeels.map((p, i) => <circle key={i} cx={p[0]} cy={p[1]} r="1.5" fill="#f14545" />)}
 
           {yTempsLabels.map(([y, v], i) => <text key={i} x={0} y={y + 4} fontSize="10" fill="#FF6B6B">{v}°C</text>)}
-          {yPluieLabels.map(([y, v], i) => <text key={i} x={width - paddingRight + 6} y={y + 4} fontSize="10" fill="#4FC3F7">{v} mm</text>)}
+          {/* {yPluieLabels.map(([y, v], i) => <text key={i} x={width - paddingRight + 6} y={y + 4} fontSize="10" fill="#4FC3F7">{v} mm</text>)} */}
+          {yPluieLabels.map(([y, v], i) => (
+  <text 
+    key={i} 
+    x={width } 
+    y={y + 4} 
+    fontSize="10" 
+    fill="#4FC3F7"
+    textAnchor="end"
+  >
+    {v} mm
+  </text>
+))}
 
         </svg>
 
         {/* 🕒 AXE TEMPS ALIGNÉ */}
-        <div style={{ position: 'relative', height: '1rem', fontSize: '0.7rem' }}>
+        <div style={{ position: 'relative', height: '1rem', fontSize: '0.7rem',marginTop: '4px' }}>
           
             {[0, 6, 12, 18, 23].map(hour => {
-  const ratio = (getXFromHour(hour) - paddingLeft) / (width - paddingLeft - paddingRight);
-  const actualX = paddingLeft + ratio * (actualWidth - paddingLeft - paddingRight); 
-  
-  return (
-    <span
-      key={hour}
-      style={{
-        position: 'absolute',
-        left: `${(actualX / actualWidth) * 100}%`,
-        transform: 'translateX(-50%)',
-        whiteSpace: 'nowrap',
-        fontVariantNumeric: 'tabular-nums'
-      }}
-    >
-      {hour}h
-    </span>
-  );
-})}
+              const ratio = (getXFromHour(hour) - paddingLeft) / (width - paddingLeft - paddingRight);
+              const actualX = paddingLeft + ratio * (actualWidth - paddingLeft - paddingRight); 
+              
+              return (
+                <span
+                  key={hour}
+                  style={{
+                    position: 'absolute',
+                    left: `${(actualX / actualWidth) * 100}%`,
+                    transform: 'translateX(-50%)',
+                    whiteSpace: 'nowrap',
+                    fontVariantNumeric: 'tabular-nums'
+                  }}
+                >
+                  {hour}h
+                </span>
+              );
+            })}
           </div>
 
                  {/* Légende */}
