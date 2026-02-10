@@ -35,29 +35,10 @@ import React from 'react';
   const tempsMax = feelsMax;
   const tempsMin = feelsMin;
 
-    // Au début du composant, ajoutez une ref pour le conteneur
-  const containerRef = React.useRef(null);
-  const [containerWidth, setContainerWidth] = React.useState(350);
 
-  // Ajoutez un useEffect pour mesurer la largeur réelle
-  React.useEffect(() => {
-    const updateWidth = () => {
-      if (containerRef.current) {
-        setContainerWidth(containerRef.current.offsetWidth);
-      }
-    };
-    
-    updateWidth();
-    window.addEventListener('resize', updateWidth);
-    return () => window.removeEventListener('resize', updateWidth);
-  }, []);
+  
 
-  // Modifiez vos constantes pour utiliser la largeur dynamique
-  const width = 350; // Garde pour viewBox
-  const actualWidth = containerWidth; // Largeur réelle du conteneur
-
-
-  // const width = 350;
+  const width = 350;
   const height = 120;
   const paddingLeft = 60;
   const paddingRight = 40;
@@ -257,7 +238,7 @@ const currentHour = localTime.getHours();
 
       {/* === Graph Température & Pluie === */}
       {/* ===== GRAPH ===== */}
-      <div style={{ margin: '16px auto', maxWidth: '380px' }} ref={containerRef}>
+      <div style={{ margin: '16px auto', maxWidth: '380px' }}>
         <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`}>
 
           <line x1={paddingLeft} y1={height} x2={width - paddingRight} y2={height} stroke="#888" />
@@ -290,26 +271,20 @@ const currentHour = localTime.getHours();
 
         {/* 🕒 AXE TEMPS ALIGNÉ */}
         <div style={{ position: 'relative', height: '1rem', fontSize: '0.7rem' }}>
-          
-            {[0, 6, 12, 18, 23].map(hour => {
-  const ratio = (getXFromHour(hour) - paddingLeft) / (width - paddingLeft - paddingRight);
-  const actualX = paddingLeft + ratio * (actualWidth - paddingLeft - paddingRight); 
-  
-  return (
-    <span
-      key={hour}
-      style={{
-        position: 'absolute',
-        left: `${(actualX / actualWidth) * 100}%`,
-        transform: 'translateX(-50%)',
-        whiteSpace: 'nowrap',
-        fontVariantNumeric: 'tabular-nums'
-      }}
-    >
-      {hour}h
-    </span>
-  );
-})}
+            {[0, 6, 12, 18, 23].map(hour => (
+              <span
+                key={hour}
+                style={{
+                  position: 'absolute',
+                  left: getXFromHour(hour),
+                  transform: 'translateX(-50%)',
+                  whiteSpace: 'nowrap',
+                  fontVariantNumeric: 'tabular-nums'
+                }}
+              >
+                {hour}h
+              </span>
+            ))}
           </div>
 
                  {/* Légende */}
