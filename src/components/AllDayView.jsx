@@ -434,7 +434,7 @@ const currentHour = localTime.getHours();
               </div>
               
             </td>
-            <td style={{ padding: '6px' }}>
+            <td style={{ padding: '6px' ,color: getWindColor(windMax[0])}}>
               {windMax[0]} km/h <br/><br/> {windMaxHour} h 
             </td>
             <td style={{ padding: '6px' }}>
