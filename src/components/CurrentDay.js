@@ -10,8 +10,8 @@ function CurrentWeather({ current, location ,astro}) {
   // console.log("data : ",current);
 
   return (
-    <div className="current-weather-infos">
-      <div className = "condition-infos">
+    <div className="current-weather-infos" style={{ background: 'transparent' }}>
+      <div className = "condition-infos" style={{ background: 'transparent' }}>
         <p> Sunrise 🌅 </p>  
         <p>Sunset 🌇</p >
         {/* <img src={sunriseImg} alt="sunrise" />

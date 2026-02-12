@@ -110,11 +110,12 @@ body {
 
 /* carte météo infos */
 .current-weather-infos {
-  backdrop-filter: blur(1rem);
+  /* backdrop-filter: blur(1rem); */
   padding: 0.875rem 0.125rem 0.125rem;
   width: 100%;
   max-width: 25rem;
   text-align: center;
+  background: transparent;
 }
 
 .condition,
@@ -123,6 +124,7 @@ body {
   align-items: center;
   justify-content: space-evenly;
   width: 100%;
+  background: transparent;
 }
 
 .condition p {

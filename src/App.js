@@ -553,7 +553,7 @@ useEffect(() => {
 
 return (
   <div>
-    <div className="top-bar">
+    <div className="top-bar" style={{ background: 'transparent',marginBottom: '2rem' }}>
       {/* 🟢 Boutons pour refresh et localisation */}
     <div className="bottom-head" style={view === 'allDay' || view === 'allDayPlus1' || view === 'allDayPlus2'? { marginTop: '2rem' } : { marginTop: '0' }}>
       
