@@ -172,7 +172,7 @@ const pointsTemp = hours.map((h, i) => [
   // 🌡️ Température
 const getTempColor = (temp) => {
 
-  if (temp >= 25) return '#FF8C66'; // très chaud, orange doux
+  if (temp >= 25) return '#FF4D4D'; // très chaud, orange doux
   if (temp >= 15) return '#FFD580'; // chaud/modéré, jaune pastel
   if (temp >= 5)  return '#a0ffcfff'; // tempérée/fraîche, bleu pastel
   if (temp >= 0) return '#80DFFF'; // froid, bleu doux
