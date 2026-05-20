@@ -172,7 +172,8 @@ const pointsTemp = hours.map((h, i) => [
   // 🌡️ Température
 const getTempColor = (temp) => {
 
-  if (temp >= 25) return '#FF4D4D'; // très chaud, orange doux
+  if (temp >= 30) return '#FF4D4D'; // très chaud, orange doux
+  if (temp >= 25) return '#FFD700' // chaud/modéré, jaune pastel
   if (temp >= 15) return '#FFD580'; // chaud/modéré, jaune pastel
   if (temp >= 5)  return '#a0ffcfff'; // tempérée/fraîche, bleu pastel
   if (temp >= 0) return '#80DFFF'; // froid, bleu doux
@@ -512,7 +513,7 @@ const currentHour = localTime.getHours();
 
 
             <td style={{ padding: '4px', textAlign: 'center' }}>
-                {h.precip_mm !== 0 ? `${h.precip_mm}%` : '-'}
+                {h.chance_of_rain !== 0 ? `${h.chance_of_rain}%` : '-'}
             </td>
             {/* <td style={{ padding: '4px', textAlign: 'center' }}>
                 {h.precip_mm !== 0 ? `${h.precip_mm.toFixed(1)} mm` : '-'}
